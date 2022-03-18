@@ -31,6 +31,8 @@ def logo():
 def credits():
     print("=============================================")
     print("#           Script by "+ text.PURPLE + "Quasolaris" + text.END + "           #")
+    print("#        https://github.com/Quasolaris      #")
+    print("#                                           #")
     print("#                                           #")
     print("#           Code snippets used:             #")
     print("# NewPipe SQLite extract: rachmadaniHaryono #")
