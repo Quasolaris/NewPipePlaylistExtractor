@@ -116,7 +116,7 @@ def getPlaylists(db_file):
     return PlaylistDir
 
 # https://www.geeksforgeeks.org/download-video-in-mp3-format-using-pytube/   
-def downloadPlaylist(folderName, playlist):
+def downloadPlaylist(folderName, playlist, fileFormat):
 
     path = "./Playlists/" + folderName
 
@@ -136,11 +136,11 @@ def downloadPlaylist(folderName, playlist):
                 destination = path + "/"
 
             
-                audio = YouTubeVideo.streams.get_audio_only()
+                audio = YouTubeVideo.streams.filter(only_audio=True)[3]
                 audioFile = audio.download(output_path=destination)
 
                 base, ext = os.path.splitext(audioFile)
-                new_file = base + '.mp3'
+                new_file = base + "." + fileFormat
                 os.rename(audioFile, new_file)
             except  Exception as e: 
                 print(text.RED + str(e) + text.END)
@@ -180,10 +180,12 @@ def main(db_file):
     print("=========================")
     if(userInput == "1"):
 
+        userFormat = str(input("Choose format: "))
+
         print("Downlaoding all playlists...")
         for playlist in Playlists:
             print("Downloading playlist: " + text.CYAN + playlist + text.END)
-            downloadPlaylist(playlist, Playlists[playlist])
+            downloadPlaylist(playlist, Playlists[playlist], userFormat)
         print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "2"):
@@ -194,7 +196,8 @@ def main(db_file):
         userInput = str(input("Type playlist name: "))
 
         if(userInput in Playlists):
-            downloadPlaylist(userInput, Playlists[userInput])
+            userFormat = str(input("Choose format: "))
+            downloadPlaylist(userInput, Playlists[userInput], userFormat)
         else:
             print(text.YELLOW + "Playlist not in data base" + text.END)
 
