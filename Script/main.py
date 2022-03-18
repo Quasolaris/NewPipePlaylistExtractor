@@ -229,11 +229,3 @@ def main(db_file):
 if __name__ == '__main__':
     main(sys.argv[1])
 
-
-"""
-TODO:
-
-choos if:
-download single playlist
-save URLS into txt file for bulkdonwload with other software
-"""
