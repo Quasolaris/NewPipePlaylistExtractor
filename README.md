@@ -5,7 +5,7 @@
 This Python script extracts playlists made inside the [NewPipe]('https://newpipe.net/') app and allows you to download them as .mp3 files.
 
 ## Usage
-- Export your NewPipe data ([Click here to see how]('https://newpipe.net/FAQ/tutorials/import-export-data/'))
+- Export your NewPipe data ([Click here to see how](https://newpipe.net/FAQ/tutorials/import-export-data/))
 - Load it to your PC
 - Extract it (We are interested into your newpipe.db file)
 - Run script with path to your newpipe.db file ``$python3 main.py newpipe.db``
@@ -30,5 +30,5 @@ I also plan to add the following:
 - Extract newpipe.db directly from archive (so no unpacking of user is needed)
 
 ### Dependencies
-- [pytube]('https://pypi.org/project/pytube/')
-- [db-sqlite3]('https://pypi.org/project/db-sqlite3/')
+- [pytube](https://pypi.org/project/pytube/)
+- [db-sqlite3](https://pypi.org/project/db-sqlite3/)
