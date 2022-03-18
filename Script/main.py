@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 
-
-
-
-from io import StringIO
-from sqlite3 import Error
 import csv
 import sqlite3
 import sys
 import os
 import requests
+import csv
+from io import StringIO
+from sqlite3 import Error
 from pytube import YouTube
+
 
 
 #===== Database extract SQlite by rachmadaniHaryono, found on comment: https://github.com/TeamNewPipe/NewPipe/issues/1788#issuecomment-500805819
@@ -68,7 +67,7 @@ def getPlaylists(db_file):
 
     for row in rows:
         PlaylistDir[row[2]] += [row[0]]
-
+    del PlaylistDir[""]
     return PlaylistDir
 
 # https://www.geeksforgeeks.org/download-video-in-mp3-format-using-pytube/   
@@ -123,10 +122,60 @@ def main(db_file):
 
     print(str(playlistCount) + " Playlists extracted: ")
 
-    for key in Playlists:
-        print("=> "+ key)
+    print("=========================")
+    print("1\t|\tDownload all playlists")
+    print("2\t|\tDownload single playlist")
+    print("3\t|\tSave playlists to .csv file")
+    print("4\t|\tSave playlists to .txt file")
 
-    downloadPlaylist("Test", Playlists['Poshig'])
+    userInput = str(input("Choose action: "))
+    print("=========================")
+    if(userInput == "1"):
+
+        print("Downlaoding all playlists...")
+        for playlist in Playlists:
+            print("Downloading playlist: " + playlist)
+            downloadPlaylist(playlist, Playlists[playlist])
+        print("Done!")
+
+    elif(userInput == "2"):
+        print("Avaiable playlists")
+        for key in Playlists:
+            print("=> " + key)
+        
+        userInput = str(input("Type playlist name: "))
+
+        if(userInput in Playlists):
+            downloadPlaylist(userInput, Playlists[userInput])
+        else:
+            print("Playlist not in data base")
+
+    elif(userInput == "3"):
+        print("Saving playlists into /Playlists/playlists.csv")
+        writerCSV = csv.writer(open("./Playlists/playlists.csv", "w"))
+
+        for playlist, songs in Playlists.items():
+            writerCSV.writerow([playlist, songs])
+
+    elif(userInput == "4"):
+        print("Saving playlists into /Playlists/playlists.txt")
+
+        with open('./Playlists/playlists.txt', 'w') as writerTXT:
+            for playlist in Playlists:
+                writerTXT.write("=========================\n")
+                writerTXT.write(playlist+"")
+                writerTXT.write("\n=========================\n")
+                for song in Playlists[playlist]:
+                    writerTXT.write(song+"\n")
 
 if __name__ == '__main__':
     main(sys.argv[1])
+
+
+"""
+TODO:
+
+choos if:
+download single playlist
+save URLS into txt file for bulkdonwload with other software
+"""
