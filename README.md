@@ -2,7 +2,7 @@
 
 ![NewPipe Playlist Extractor](/Screenshots/Screenshot_Extractor.png)
 
-This Python script extracts playlists made inside the [NewPipe]('https://newpipe.net/') app and allows you to download them as .mp3 files.
+This Python script extracts playlists made inside the [NewPipe](https://newpipe.net/) app and allows you to download them as .mp3 files.
 
 ## Usage
 - Export your NewPipe data ([Click here to see how](https://newpipe.net/FAQ/tutorials/import-export-data/))
