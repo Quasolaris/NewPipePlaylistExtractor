@@ -28,7 +28,19 @@ def logo():
     print("                   __/ |                                                                        ")
     print("                  |___/                                                                         ")
 
-#===== Database extract SQlite by rachmadaniHaryono, found on comment: https://github.com/TeamNewPipe/NewPipe/issues/1788#issuecomment-500805819
+def credits():
+    print("=============================================")
+    print("#           Script by Quasolaris            #")
+    print("#                                           #")
+    print("#           Code snippets used:             #")
+    print("# NewPipe SQLite extract: rachmadaniHaryono #")
+    print("#    YouTube mp3 Download: GeeksForGeeks    #")
+    print("#   YouTube Video Avaiability: S P Sharan   #")
+    print("#   (For links to the snippets see script)  #")
+    print("=============================================")
+
+
+#Database extract SQlite by rachmadaniHaryono, found on comment: https://github.com/TeamNewPipe/NewPipe/issues/1788#issuecomment-500805819
 def create_connection(db_file):
     """ create a database connection to the SQLite database
         specified by the db_file
@@ -60,7 +72,7 @@ def get_rows(db_file):
     cur.execute(sqlCmds)
     rows = cur.fetchall()
     return rows
-#=====
+
 
 def getPlaylists(db_file):
     print("Extracting Playlists...")
@@ -145,6 +157,7 @@ def main(db_file):
     print("2\t|\tDownload single playlist")
     print("3\t|\tSave playlists to .csv file")
     print("4\t|\tSave playlists to .txt file")
+    print("5\t|\tCredits")
 
     userInput = str(input("Choose action: "))
     print("=========================")
@@ -185,6 +198,13 @@ def main(db_file):
                 writerTXT.write("\n=========================\n")
                 for song in Playlists[playlist]:
                     writerTXT.write(song+"\n")
+
+    elif(userInput == "5"):
+        credits()
+
+    else:
+        print("Wrong input, ending script")
+
 
 if __name__ == '__main__':
     main(sys.argv[1])
