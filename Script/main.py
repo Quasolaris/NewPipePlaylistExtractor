@@ -136,7 +136,7 @@ def downloadPlaylist(folderName, playlist, fileFormat):
                 destination = path + "/"
 
             
-                audio = YouTubeVideo.streams.filter(only_audio=True)[3]
+                audio = YouTubeVideo.streams.filter(only_audio=True)[0]
                 audioFile = audio.download(output_path=destination)
 
                 base, ext = os.path.splitext(audioFile)
@@ -199,6 +199,8 @@ def main(db_file):
         if(userInput in Playlists):
             userFormat = str(input("Choose format: "))
             downloadPlaylist(userInput, Playlists[userInput], userFormat)
+            print(text.GREEN + "Done!" + text.END)
+            
         else:
             print(text.YELLOW + "Playlist not in data base" + text.END)
 
