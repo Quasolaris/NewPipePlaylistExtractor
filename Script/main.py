@@ -10,7 +10,23 @@ from io import StringIO
 from sqlite3 import Error
 from pytube import YouTube
 
-
+def logo():
+    print("                          _   _                 ______  _                                       ")
+    print("                         | \ | |                | ___ \(_)                                      ")
+    print("                         |  \| |  ___ __      __| |_/ / _  _ __    ___                          ")
+    print("                         | . \` | / _ \\ \ /\ / /|  __/ | || '_ \  / _ \                         ")
+    print("                         | |\  ||  __/ \ V  V / | |    | || |_) ||  __/                         ")
+    print("                         \_| \_/ \___|  \_/\_/  \_|    |_|| .__/  \___|                         ")
+    print("                                                          | |                                   ")
+    print("                                                          |_|                                   ")
+    print("______  _                _  _       _     _____        _                       _                ")
+    print("| ___ \| |              | |(_)     | |   |  ___|      | |                     | |               ")
+    print("| |_/ /| |  __ _  _   _ | | _  ___ | |_  | |__  __  __| |_  _ __   __ _   ___ | |_   ___   _ __ ")
+    print("|  __/ | | / _\` || | | || || |/ __|| __| |  __| \ \/ /| __|| '__| / _\` | / __|| __| / _ \ | '__|")
+    print("| |    | || (_| || |_| || || |\__ \| |_  | |___  >  < | |_ | |   | (_| || (__ | |_ | (_) || |   ")
+    print("\_|    |_| \__,_| \__, ||_||_||___/ \__| \____/ /_/\_\ \__||_|    \__,_| \___| \__| \___/ |_|   ")
+    print("                   __/ |                                                                        ")
+    print("                  |___/                                                                         ")
 
 #===== Database extract SQlite by rachmadaniHaryono, found on comment: https://github.com/TeamNewPipe/NewPipe/issues/1788#issuecomment-500805819
 def create_connection(db_file):
@@ -116,6 +132,8 @@ def checkIfAvaiable(url):
 
 def main(db_file):
     
+    logo()
+
     Playlists = getPlaylists(db_file)
 
     playlistCount = len(Playlists)
