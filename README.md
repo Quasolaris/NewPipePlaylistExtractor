@@ -7,7 +7,7 @@ This Python script extracts playlists made inside the [NewPipe](https://newpipe.
 ## Usage
 - Export your NewPipe data ([Click here to see how](https://newpipe.net/FAQ/tutorials/import-export-data/))
 - Load it to your PC
-- Extract it (We are interested into your newpipe.db file)
+- Extract it (You will need the newpipe.db file)
 - Run script with path to your newpipe.db file ``$python3 main.py newpipe.db``
 - Choose action
 - To update playlists just repeat with new .db file, already downloaded files get ignored
