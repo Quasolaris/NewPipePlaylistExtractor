@@ -48,3 +48,10 @@ Track Type                      : Audio
 Audio Codec ID                  : A_OPUS
 Audio Sample Rate               : 48000
 Audio Channels                  : 2
+
+somehow there is no bitrate inside those files...
+But it seems to work on linux at least because extensions are not important. (sorry windows users)
+
+------------------
+
+Now lets implement a converter that it actually converts the files

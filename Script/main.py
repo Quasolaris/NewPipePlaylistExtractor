@@ -142,6 +142,7 @@ def downloadPlaylist(folderName, playlist, fileFormat):
                 base, ext = os.path.splitext(audioFile)
                 new_file = base + "." + fileFormat
                 os.rename(audioFile, new_file)
+                
             except  Exception as e: 
                 print(text.RED + str(e) + text.END)
                 
