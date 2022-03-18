@@ -11,7 +11,7 @@ from sqlite3 import Error
 from pytube import YouTube
 
 def logo():
-    print("                          _   _                 ______  _                                       ")
+    print(text.RED + "                          _   _                 ______  _                                       ")
     print("                         | \ | |                | ___ \(_)                                      ")
     print("                         |  \| |  ___ __      __| |_/ / _  _ __    ___                          ")
     print("                         | . \` | / _ \\ \ /\ / /|  __/ | || '_ \  / _ \                         ")
@@ -19,25 +19,40 @@ def logo():
     print("                         \_| \_/ \___|  \_/\_/  \_|    |_|| .__/  \___|                         ")
     print("                                                          | |                                   ")
     print("                                                          |_|                                   ")
-    print("______  _                _  _       _     _____        _                       _                ")
+    print(text.GREEN + "______  _                _  _       _     _____        _                       _                ")
     print("| ___ \| |              | |(_)     | |   |  ___|      | |                     | |               ")
     print("| |_/ /| |  __ _  _   _ | | _  ___ | |_  | |__  __  __| |_  _ __   __ _   ___ | |_   ___   _ __ ")
     print("|  __/ | | / _\` || | | || || |/ __|| __| |  __| \ \/ /| __|| '__| / _\` | / __|| __| / _ \ | '__|")
     print("| |    | || (_| || |_| || || |\__ \| |_  | |___  >  < | |_ | |   | (_| || (__ | |_ | (_) || |   ")
     print("\_|    |_| \__,_| \__, ||_||_||___/ \__| \____/ /_/\_\ \__||_|    \__,_| \___| \__| \___/ |_|   ")
     print("                   __/ |                                                                        ")
-    print("                  |___/                                                                         ")
+    print("                  |___/                                                                         "+ text.END)
 
 def credits():
     print("=============================================")
-    print("#           Script by Quasolaris            #")
+    print("#           Script by "+ text.PURPLE + "Quasolaris" + text.END + "           #")
     print("#                                           #")
     print("#           Code snippets used:             #")
     print("# NewPipe SQLite extract: rachmadaniHaryono #")
     print("#    YouTube mp3 Download: GeeksForGeeks    #")
     print("#   YouTube Video Avaiability: S P Sharan   #")
+    print("#         Color class: DelftStack           #")
+    print("#                                           #")
     print("#   (For links to the snippets see script)  #")
     print("=============================================")
+
+# https://www.delftstack.com/howto/python/python-bold-text/
+class text:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'
 
 
 #Database extract SQlite by rachmadaniHaryono, found on comment: https://github.com/TeamNewPipe/NewPipe/issues/1788#issuecomment-500805819
@@ -111,7 +126,7 @@ def downloadPlaylist(folderName, playlist):
         
         if(checkIfAvaiable):
             
-            print("Downloading: " + videoURL)
+            print(text.BLUE + "Downloading: " + videoURL + text.END)
             try:
                 YouTubeVideo = YouTube(str(videoURL))
 
@@ -126,7 +141,7 @@ def downloadPlaylist(folderName, playlist):
                 new_file = base + '.mp3'
                 os.rename(audioFile, new_file)
             except  Exception as e: 
-                print(e)
+                print(text.RED + str(e) + text.END)
                 
 
 
@@ -150,7 +165,7 @@ def main(db_file):
 
     playlistCount = len(Playlists)
 
-    print(str(playlistCount) + " Playlists extracted: ")
+    print(text.CYAN + str(playlistCount) + text.END + " Playlists extracted ")
 
     print("=========================")
     print("1\t|\tDownload all playlists")
@@ -165,9 +180,9 @@ def main(db_file):
 
         print("Downlaoding all playlists...")
         for playlist in Playlists:
-            print("Downloading playlist: " + playlist)
+            print("Downloading playlist: " + text.CYAN + playlist + text.END)
             downloadPlaylist(playlist, Playlists[playlist])
-        print("Done!")
+        print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "2"):
         print("Avaiable playlists")
@@ -179,7 +194,7 @@ def main(db_file):
         if(userInput in Playlists):
             downloadPlaylist(userInput, Playlists[userInput])
         else:
-            print("Playlist not in data base")
+            print(text.YELLOW + "Playlist not in data base" + text.END)
 
     elif(userInput == "3"):
         print("Saving playlists into /Playlists/playlists.csv")
@@ -187,6 +202,7 @@ def main(db_file):
 
         for playlist, songs in Playlists.items():
             writerCSV.writerow([playlist, songs])
+        print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "4"):
         print("Saving playlists into /Playlists/playlists.txt")
@@ -198,12 +214,14 @@ def main(db_file):
                 writerTXT.write("\n=========================\n")
                 for song in Playlists[playlist]:
                     writerTXT.write(song+"\n")
+        print(text.GREEN + "Done!" + text.END)
+
 
     elif(userInput == "5"):
         credits()
 
     else:
-        print("Wrong input, ending script")
+        print(text.YELLOW + "Wrong input, ending script" + text.END)
 
 
 if __name__ == '__main__':
