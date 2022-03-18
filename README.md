@@ -30,5 +30,5 @@ I also plan to add the following:
 - Extract newpipe.db directly from archive (so no unpacking of user is needed)
 
 ### Dependencies
-[pytube]('https://pypi.org/project/pytube/')
-[db-sqlite3]('https://pypi.org/project/db-sqlite3/')
+- [pytube]('https://pypi.org/project/pytube/')
+- [db-sqlite3]('https://pypi.org/project/db-sqlite3/')
