@@ -32,3 +32,4 @@ I also plan to add the following:
 ### Dependencies
 - [pytube](https://pypi.org/project/pytube/)
 - [db-sqlite3](https://pypi.org/project/db-sqlite3/)
+- [ffmpeg](https://ffmpeg.org/) ``sudo apt install ffmpeg``
