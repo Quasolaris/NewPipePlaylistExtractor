@@ -136,18 +136,19 @@ def downloadPlaylist(folderName, playlist, codec):
                 songName = YouTubeVideo.streams[0].title
                 destination = path + "/"
 
-            
+                
                 audio = YouTubeVideo.streams.filter(only_audio=True)[0]
                 audioFile = audio.download(output_path=destination)
 
-                given_audio = AudioSegment.from_file(audioFile, format="mp4")
+                if(codec != "mp4"):
+                    given_audio = AudioSegment.from_file(audioFile, format="mp4")
 
-                base, ext = os.path.splitext(audioFile)
-                newFile = base + "."+codec
+                    base, ext = os.path.splitext(audioFile)
+                    newFile = base + "."+codec
 
-                given_audio.export(newFile, format=codec)
-                
-                os.remove(audioFile)
+                    given_audio.export(newFile, format=codec)
+                    
+                    os.remove(audioFile)
 
             except  Exception as e: 
                 print(text.RED + str(e) + text.END)
@@ -169,11 +170,13 @@ def checkIfAvaiable(url):
 
 def chooseCodec():
     print("=========================")
+    print(text.YELLOW + "Note: Audio gets converted from .mp4 to get raw file choose mp4 option" + text.END)
     print("1\t|\tmp3")
     print("2\t|\twav")
     print("3\t|\tflac")
     print("4\t|\tacc")
     print("5\t|\topus")
+    print("6\t|\tmp4")
 
     userInput = str(input("Choose codec(default is mp3): "))
     print("=========================")
@@ -188,6 +191,8 @@ def chooseCodec():
         return "acc"
     elif(userInput == "5"):
         return "opus"
+    elif(userInput == "6"):
+        return "mp4"
     else:
         return "mp3"
 
