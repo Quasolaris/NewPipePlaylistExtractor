@@ -135,8 +135,7 @@ def downloadPlaylist(folderName, playlist, codec):
 
                 songName = YouTubeVideo.streams[0].title
                 destination = path + "/"
-
-                
+              
                 audio = YouTubeVideo.streams.filter(only_audio=True)[0]
                 audioFile = audio.download(output_path=destination)
 

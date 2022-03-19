@@ -2,7 +2,7 @@
 
 ![NewPipe Playlist Extractor](/Screenshots/Screenshot_Extractor.png)
 
-This Python script extracts playlists made inside the [NewPipe](https://newpipe.net/) app and allows you to download them as .mp3 files.
+This Python script extracts playlists made inside the [NewPipe](https://newpipe.net/) app and allows you to download them as .mp4 audio-files.
 
 ## Usage
 - Export your NewPipe data ([Click here to see how](https://newpipe.net/FAQ/tutorials/import-export-data/))
@@ -16,8 +16,8 @@ This Python script extracts playlists made inside the [NewPipe](https://newpipe.
 The playlists get saved into the /Script/Playlists folder
 
 ## Features
-- Downloads all playlists as MP3 and saves them inside folders named after playlist
-- Downloads single playlist and saves it as MP3 in folder named after playlist
+- Downloads all playlists as MP4 and saves them inside folders named after playlist
+- Downloads single playlist and saves it as MP4 in folder named after playlist
 - Exports playlists as CSV file
 - Exports playlist into a TXT file (Format: "Playlist title" \n "URLs")
 - Output is coloured (Because colours are fun!)
@@ -25,6 +25,7 @@ The playlists get saved into the /Script/Playlists folder
 ## Planed features
 It depends if you guys like it and want more of it. If yes, you can recommend features that would be nice and I look to implement them.
 I also plan to add the following:
+- MP3 format
 - Download as video
 - Choose download path
 - Extract newpipe.db directly from archive (so no unpacking of user is needed)
