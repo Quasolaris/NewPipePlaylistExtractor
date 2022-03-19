@@ -136,11 +136,11 @@ def downloadPlaylist(folderName, playlist):
                 destination = path + "/"
 
             
-                audio = YouTubeVideo.streams.get_audio_only()
+                audio = YouTubeVideo.streams.filter(only_audio=True)[0]
                 audioFile = audio.download(output_path=destination)
 
                 base, ext = os.path.splitext(audioFile)
-                new_file = base + '.mp3'
+                new_file = base + '.mp4'
                 os.rename(audioFile, new_file)
             except  Exception as e: 
                 print(text.RED + str(e) + text.END)
