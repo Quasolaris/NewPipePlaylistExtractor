@@ -46,5 +46,6 @@ The playlists get saved into the /Script/Playlists folder
 ### Dependencies
 - [pytube](https://pypi.org/project/pytube/)
 - [db-sqlite3](https://pypi.org/project/db-sqlite3/)
+- [pydub](https://pypi.org/project/pydub/)
 - [ffmpeg](https://ffmpeg.org/) ``sudo apt install ffmpeg``
 - The codec you want to download has to be  installed on your machine
