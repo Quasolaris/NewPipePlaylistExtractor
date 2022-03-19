@@ -170,7 +170,8 @@ def checkIfAvaiable(url):
 
 def chooseCodec():
     print("=========================")
-    print(text.YELLOW + "Note: Audio gets converted from .mp4 to get raw file choose mp4 option" + text.END)
+    print(text.YELLOW + "Note: Audio gets converted from .mp4 to get raw file choose mp4 option.")
+    print("When ffmpeg fails it can be that you need to install the chosen codec on your machine."  + text.END)
     print("1\t|\tmp3")
     print("2\t|\twav")
     print("3\t|\tflac")
