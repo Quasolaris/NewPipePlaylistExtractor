@@ -9,6 +9,7 @@ import csv
 from io import StringIO
 from sqlite3 import Error
 from pytube import YouTube
+from pydub import AudioSegment
 
 def logo():
     print(text.RED + "                          _   _                 ______  _                                       ")
@@ -116,7 +117,7 @@ def getPlaylists(db_file):
     return PlaylistDir
 
 # https://www.geeksforgeeks.org/download-video-in-mp3-format-using-pytube/   
-def downloadPlaylist(folderName, playlist):
+def downloadPlaylist(folderName, playlist, codec):
 
     path = "./Playlists/" + folderName
 
@@ -134,14 +135,20 @@ def downloadPlaylist(folderName, playlist):
 
                 songName = YouTubeVideo.streams[0].title
                 destination = path + "/"
-
-            
+              
                 audio = YouTubeVideo.streams.filter(only_audio=True)[0]
                 audioFile = audio.download(output_path=destination)
 
-                base, ext = os.path.splitext(audioFile)
-                new_file = base + '.mp4'
-                os.rename(audioFile, new_file)
+                if(codec != "mp4"):
+                    given_audio = AudioSegment.from_file(audioFile, format="mp4")
+
+                    base, ext = os.path.splitext(audioFile)
+                    newFile = base + "."+codec
+
+                    given_audio.export(newFile, format=codec)
+                    
+                    os.remove(audioFile)
+
             except  Exception as e: 
                 print(text.RED + str(e) + text.END)
                 
@@ -158,6 +165,36 @@ def checkIfAvaiable(url):
     
     request = requests.get(url)
     return False if pattern in request.text else True
+
+
+def chooseCodec():
+    print("=========================")
+    print(text.YELLOW + "Note: Audio gets converted from .mp4 to get raw file choose mp4 option.")
+    print("When ffmpeg fails it can be that you need to install the chosen codec on your machine."  + text.END)
+    print("1\t|\tmp3")
+    print("2\t|\twav")
+    print("3\t|\tflac")
+    print("4\t|\tacc")
+    print("5\t|\topus")
+    print("6\t|\tmp4")
+
+    userInput = str(input("Choose codec(default is mp3): "))
+    print("=========================")
+
+    if(userInput == "1"):
+        return "mp3"
+    elif(userInput == "2"):
+        return "wav"
+    elif(userInput == "3"):
+        return "flac"
+    elif(userInput == "4"):
+        return "acc"
+    elif(userInput == "5"):
+        return "opus"
+    elif(userInput == "6"):
+        return "mp4"
+    else:
+        return "mp3"
 
 def main(db_file):
     
@@ -180,10 +217,12 @@ def main(db_file):
     print("=========================")
     if(userInput == "1"):
 
+        userCodec = chooseCodec()
+
         print("Downlaoding all playlists...")
         for playlist in Playlists:
             print("Downloading playlist: " + text.CYAN + playlist + text.END)
-            downloadPlaylist(playlist, Playlists[playlist])
+            downloadPlaylist(playlist, Playlists[playlist], userCodec)
         print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "2"):
@@ -194,7 +233,11 @@ def main(db_file):
         userInput = str(input("Type playlist name: "))
 
         if(userInput in Playlists):
-            downloadPlaylist(userInput, Playlists[userInput])
+            userCodec = chooseCodec()
+            downloadPlaylist(userInput, Playlists[userInput], userCodec)
+
+
+            print(text.GREEN + "Done!" + text.END)
         else:
             print(text.YELLOW + "Playlist not in data base" + text.END)
 

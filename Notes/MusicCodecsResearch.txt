@@ -1,0 +1,59 @@
+Possible codecs
+------------------
+yt.streams.filter(only_audio=True)
+0: mp4 128kbps
+1: webm 50kbps
+2: webm 70kbps
+3: webm 160kbps
+
+Youtube
+------------------
+Youtube seems to have two max bit rates (in a MP4 container):
+Premium: 256kbdp AAC
+Normal: 128 kbps AAC
+
+Interesting: Youtube starts using WebM and Opus when a video gets popular.
+
+I will therefore use WebM 160kbps 
+
+Afterwards convert it to whatever the user wants
+------------------
+
+Testing bit rate:
+
+using $exiftool $FILENAME
+
+ExifTool Version Number         : 12.16
+File Name                       : test.flac
+Directory                       : .
+File Size                       : 2.2 MiB
+File Modification Date/Time     : 2022:03:18 18:52:10+01:00
+File Access Date/Time           : 2022:03:18 18:52:09+01:00
+File Inode Change Date/Time     : 2022:03:18 18:56:40+01:00
+File Permissions                : rw-rw-r--
+File Type                       : MKA
+File Type Extension             : mka
+MIME Type                       : audio/x-matroska
+EBML Version                    : 1
+EBML Read Version               : 1
+Doc Type                        : webm
+Doc Type Version                : 4
+Doc Type Read Version           : 2
+Timecode Scale                  : 1 ms
+Duration                        : 0:04:28
+Muxing App                      : google
+Writing App                     : google
+Track Number                    : 1
+Track Type                      : Audio
+Audio Codec ID                  : A_OPUS
+Audio Sample Rate               : 48000
+Audio Channels                  : 2
+
+somehow there is no bitrate inside those files...
+But it seems to work on linux at least because extensions are not important. (sorry windows users)
+
+------------------
+
+Now lets implement a converter that it actually converts the files
+
+Tested with webm 160kbps and 128 kbps mp4, with different headphones and speakers. mp4 sounds the best so I will go with that
