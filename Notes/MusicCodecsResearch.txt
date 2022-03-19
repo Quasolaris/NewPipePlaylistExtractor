@@ -55,3 +55,5 @@ But it seems to work on linux at least because extensions are not important. (so
 ------------------
 
 Now lets implement a converter that it actually converts the files
+
+Tested with webm 160kbps and 128 kbps mp4, with different headphones and speakers. mp4 sounds the best so I will go with that

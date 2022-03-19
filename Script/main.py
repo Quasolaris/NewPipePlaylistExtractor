@@ -233,8 +233,15 @@ def main(db_file):
         userInput = str(input("Type playlist name: "))
 
         if(userInput in Playlists):
+<<<<<<< HEAD
             userCodec = chooseCodec()
             downloadPlaylist(userInput, Playlists[userInput], userCodec)
+=======
+            userFormat = str(input("Choose format: "))
+            downloadPlaylist(userInput, Playlists[userInput], userFormat)
+            print(text.GREEN + "Done!" + text.END)
+            
+>>>>>>> 3327eb55e6213965acd95128a50b4855bfad59c3
         else:
             print(text.YELLOW + "Playlist not in data base" + text.END)
 
