@@ -6,7 +6,7 @@ This Python script extracts playlists made with the [NewPipe](https://newpipe.ne
 
 When you create a playlist in NewPipe it is not saved as a YouTube playlist and can therefore not be downloaded via a playlist-link. This script allows you to extract the list of videos you have in a playlist and downlaod them as audio files. 
 
-#### Note: I write and test the script on Linux, I will start testing on Windows soon to ensure it also works on other OSs
+### Note: To use script on Windows or Andriod please see instructions below
 
 
 ## Features
@@ -68,6 +68,14 @@ The playlists get saved into the /Script/Playlists folder
 - Move your playlists outside to the Music folder
 
 Now you can listen to the downloaded music on your phone.
+
+## Use on Windows
+- Dowanload [ffmpeg for windows](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-essentials.7z)
+- Unpack the archive
+- Copy all .exe files from /ARCHIVE_NAME/bin
+- Paste them inside the /Scripts folder
+- Run script
+
 
 ### Dependencies
 - [pytube](https://pypi.org/project/pytube/) ``$pip install pytube``
