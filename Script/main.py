@@ -4,8 +4,6 @@ import csv
 import sqlite3
 import sys
 import os
-import requests
-import csv
 from io import StringIO
 from sqlite3 import Error
 from pytube import YouTube
