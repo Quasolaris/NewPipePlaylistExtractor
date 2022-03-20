@@ -35,8 +35,6 @@ def credits():
     print("#                                           #")
     print("#           Code snippets used:             #")
     print("# NewPipe SQLite extract: rachmadaniHaryono #")
-    print("#    YouTube mp3 Download: GeeksForGeeks    #")
-    print("#   YouTube Video Avaiability: S P Sharan   #")
     print("#         Color class: DelftStack           #")
     print("#                                           #")
     print("#   (For links to the snippets see script)  #")
@@ -114,7 +112,7 @@ def getPlaylists(db_file):
     del PlaylistDir[""]
     return PlaylistDir
 
-# https://www.geeksforgeeks.org/download-video-in-mp3-format-using-pytube/   
+
 def downloadPlaylist(folderName, playlist, codec):
 
     path = "./Playlists/" + folderName
@@ -124,45 +122,28 @@ def downloadPlaylist(folderName, playlist, codec):
 
     # download audio
     for videoURL in playlist:
-        
-        if(checkIfAvaiable):
-            
-            print(text.BLUE + "Downloading: " + videoURL + text.END)
-            try:
-                YouTubeVideo = YouTube(str(videoURL))
+        print(text.BLUE + "Downloading: " + videoURL + text.END)
+        try:
+            YouTubeVideo = YouTube(str(videoURL))
 
-                songName = YouTubeVideo.streams[0].title
-                destination = path + "/"
-              
-                audio = YouTubeVideo.streams.filter(only_audio=True)[0]
-                audioFile = audio.download(output_path=destination)
+            songName = YouTubeVideo.streams[0].title
+            destination = path + "/"
+          
+            audio = YouTubeVideo.streams.filter(only_audio=True)[0]
+            audioFile = audio.download(output_path=destination)
 
-                if(codec != "mp4"):
-                    given_audio = AudioSegment.from_file(audioFile, format="mp4")
+            if(codec != "mp4"):
+                given_audio = AudioSegment.from_file(audioFile, format="mp4")
 
-                    base, ext = os.path.splitext(audioFile)
-                    newFile = base + "."+codec
+                base, ext = os.path.splitext(audioFile)
+                newFile = base + "."+codec
 
-                    given_audio.export(newFile, format=codec)
-                    
-                    os.remove(audioFile)
-
-            except  Exception as e: 
-                print(text.RED + str(e) + text.END)
+                given_audio.export(newFile, format=codec)
                 
+                os.remove(audioFile)
 
-
-        else:
-            print(videoURL + " not avaiable in your location (Try a VPN)")
-
-    
-
-# taken from S P Sharan: https://stackoverflow.com/questions/68818442/how-to-check-if-a-youtube-video-exists-using-python
-def checkIfAvaiable(url):
-    pattern = '"playabilityStatus":{"status":"ERROR","reason":"Video unavailable"'
-    
-    request = requests.get(url)
-    return False if pattern in request.text else True
+        except  Exception as e: 
+            print(text.RED + str(e) + text.END)
 
 
 def chooseCodec():
