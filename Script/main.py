@@ -114,9 +114,7 @@ def getPlaylists(db_file):
 
 
 def downloadPlaylist(folderName, playlist, codec):
-
     path = "./Playlists/" + folderName
-
     if(not os.path.exists(path)):
         os.mkdir("./Playlists/" + folderName)
 
@@ -124,24 +122,28 @@ def downloadPlaylist(folderName, playlist, codec):
     for videoURL in playlist:
         print(text.BLUE + "Downloading: " + videoURL + text.END)
         try:
+            # Download .mp4 of YoutTube URL
             YouTubeVideo = YouTube(str(videoURL))
-
             songName = YouTubeVideo.streams[0].title
             destination = path + "/"
-          
-            audio = YouTubeVideo.streams.filter(only_audio=True)[0]
-            audioFile = audio.download(output_path=destination)
 
-            if(codec != "mp4"):
-                given_audio = AudioSegment.from_file(audioFile, format="mp4")
+            # Ignores URL if alreay downloaded in same codec
+            if(not os.path.exists(destination + songName + "." + codec)):
+                audio = YouTubeVideo.streams.filter(only_audio=True)[0]
+                audioFile = audio.download(output_path=destination)
 
-                base, ext = os.path.splitext(audioFile)
-                newFile = base + "."+codec
-
-                given_audio.export(newFile, format=codec)
+                # if user wants other codec, convert
+                if(codec != "mp4"):
+                    
+                    given_audio = AudioSegment.from_file(audioFile, format="mp4")
+                    base, ext = os.path.splitext(audioFile)
+                    newFile = base + "."+ codec
+                    given_audio.export(newFile, format=codec)
                 
-                os.remove(audioFile)
-
+                    # removes .mp4 file after conversion is done
+                    os.remove(audioFile)
+            else:
+                print(text.CYAN + (destination + songName + "." + codec) + " already downloaded" + text.END)
         except  Exception as e: 
             print(text.RED + str(e) + text.END)
 
@@ -194,8 +196,9 @@ def main(db_file):
 
     userInput = str(input("Choose action: "))
     print("=========================")
-    if(userInput == "1"):
 
+
+    if(userInput == "1"):
         userCodec = chooseCodec()
 
         print("Downlaoding all playlists...")
@@ -208,15 +211,13 @@ def main(db_file):
         print("Avaiable playlists")
         for key in Playlists:
             print("=> " + key)
-        
         userInput = str(input("Type playlist name: "))
 
         if(userInput in Playlists):
             userCodec = chooseCodec()
             downloadPlaylist(userInput, Playlists[userInput], userCodec)
-
-
             print(text.GREEN + "Done!" + text.END)
+            
         else:
             print(text.YELLOW + "Playlist not in data base" + text.END)
 
