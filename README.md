@@ -15,7 +15,7 @@ When you create a playlist in NewPipe it is not saved as a YouTube playlist and 
 4. [Usage](https://github.com/Quasolaris/NewPipePlaylistExtractor#usage)
 5. [Linux](https://github.com/Quasolaris/NewPipePlaylistExtractor#linux)
 6. [Windows](https://github.com/Quasolaris/NewPipePlaylistExtractor#windows)
-7. [Android](https://github.com/Quasolaris/NewPipePlaylistExtractor#andriod)
+7. [Android](https://github.com/Quasolaris/NewPipePlaylistExtractor#android)
 
 
 
