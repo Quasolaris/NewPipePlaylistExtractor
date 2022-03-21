@@ -55,7 +55,7 @@ The script supports the following codecs:
 
 The playlists get saved into the /Script/Playlists folder
 
-### Linx
+### Linux
 Install the dependencies and you are good to go.
 
 ### Windows
