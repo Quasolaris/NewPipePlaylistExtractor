@@ -54,7 +54,8 @@ class text:
    END = '\033[0m'
 
 
-#Database extract SQlite by rachmadaniHaryono, found on comment: https://github.com/TeamNewPipe/NewPipe/issues/1788#issuecomment-500805819
+# Database extract SQlite by rachmadaniHaryono, found on comment: https://github.com/TeamNewPipe/NewPipe/issues/1788#issuecomment-500805819
+# --------------------
 def create_connection(db_file):
     """ create a database connection to the SQLite database
         specified by the db_file
@@ -86,12 +87,9 @@ def get_rows(db_file):
     cur.execute(sqlCmds)
     rows = cur.fetchall()
     return rows
-
+# --------------------
 
 def getPlaylists(db_file):
-    print("Extracting Playlists...")
-    rows = get_rows(db_file)
-    
     """
     Sorting playlists
     Dictionary has playlist name as key 
@@ -102,6 +100,8 @@ def getPlaylists(db_file):
     
     TODO: Add meta data to songs --> Playlist name as Album
     """
+    print("Extracting Playlists...")
+    rows = get_rows(db_file)
 
     PlaylistDir = {"": ""}
     for row in rows:
@@ -144,6 +144,7 @@ def downloadPlaylist(folderName, playlist, codec):
                     os.remove(audioFile)
             else:
                 print(text.CYAN + (destination + songName + "." + codec) + " already downloaded" + text.END)
+
         except  Exception as e: 
             print(text.RED + str(e) + text.END)
 
@@ -198,6 +199,7 @@ def main(db_file):
     print("=========================")
 
 
+    # TODO: clean up mess of print statements, unreadable...
     if(userInput == "1"):
         userCodec = chooseCodec()
 
