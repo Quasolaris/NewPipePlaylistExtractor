@@ -86,6 +86,7 @@ To use the script on Android you need to usw Termux and install a few packages:
 ``pkg update``<br>
 ``pkg install python``<br>
 ``pip install db-sqlite3``<br>
+``pip install pytube``<br>
 ``pip install pydub``<br>
 ``pkg install ffmpeg``<br>
 
