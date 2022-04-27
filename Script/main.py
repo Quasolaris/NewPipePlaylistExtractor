@@ -4,6 +4,7 @@ import csv
 import sqlite3
 import sys
 import os
+import time
 from io import StringIO
 from sqlite3 import Error
 from pytube import YouTube
@@ -144,9 +145,15 @@ def downloadPlaylist(folderName, playlist, codec):
                     os.remove(audioFile)
             else:
                 print(text.CYAN + (destination + songName + "." + codec) + " already downloaded" + text.END)
+                # timeout for 3 sec, to circumwent DDoS protection of Youtube
+                print(text.YELLOW + "Waiting 3 sec. for Youtube DDoS protection circumvent" + text.END)
+                time.sleep(3)
 
-        except  Exception as e: 
+        except  Exception as e:
             print(text.RED + str(e) + text.END)
+            print("If Error is: " + text.RED + "get_throttling_function_name: could not find match for multiple" + text.END)
+            print("Read the Error chapter in the README")
+
 
 
 def chooseCodec():
