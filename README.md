@@ -13,9 +13,9 @@ When you create a playlist in NewPipe it is not saved as a YouTube playlist and 
 2. [Codecs](https://github.com/Quasolaris/NewPipePlaylistExtractor#codecs)
 3. [Dependencies](https://github.com/Quasolaris/NewPipePlaylistExtractor#dependencies)
 4. [Usage](https://github.com/Quasolaris/NewPipePlaylistExtractor#usage)
-5. [Linux](https://github.com/Quasolaris/NewPipePlaylistExtractor##linux)
-6. [Windows](https://github.com/Quasolaris/NewPipePlaylistExtractor##windows)
-7. [Windows](https://github.com/Quasolaris/NewPipePlaylistExtractor##andriod)
+5. [Linux](https://github.com/Quasolaris/NewPipePlaylistExtractor#linux)
+6. [Windows](https://github.com/Quasolaris/NewPipePlaylistExtractor#windows)
+7. [Android](https://github.com/Quasolaris/NewPipePlaylistExtractor#android)
 
 
 
@@ -55,10 +55,10 @@ The script supports the following codecs:
 
 The playlists get saved into the /Script/Playlists folder
 
-### Linx
+## Linux
 Install the dependencies and you are good to go.
 
-### Windows
+## Windows
 To use the script on Windows you have to do a few extra stepps:
 
 - Dowanload [ffmpeg for windows](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-essentials.7z)
@@ -67,8 +67,8 @@ To use the script on Windows you have to do a few extra stepps:
 - Paste them inside the /Scripts folder
 - Run script
 
-### Android
-To use the script on Android yu need to usw Termux and install a few packages:
+## Android
+To use the script on Android you need to usw Termux and install a few packages:
 
 - Install [Termux](https://termux.com/)
 
