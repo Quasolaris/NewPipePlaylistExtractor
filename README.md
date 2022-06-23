@@ -9,6 +9,8 @@ When you create a playlist in NewPipe it is not saved as a YouTube playlist and 
 ### Note: To use script on Windows or Andriod please see instructions below
 ### Note: MacOS users, you can follow the Linux guide
 
+[Support me on Pateron](https://www.patreon.com/quasolaris)
+
 # Table of Contents
 1. [Features](https://github.com/Quasolaris/NewPipePlaylistExtractor#features)
 2. [Codecs](https://github.com/Quasolaris/NewPipePlaylistExtractor#codecs)
