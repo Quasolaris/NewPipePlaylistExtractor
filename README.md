@@ -71,6 +71,9 @@ To use the script on Windows you have to do a few extra stepps:
 - Run script
 
 ## Android
+
+For a step-by-step guide for the installation on Android [click here](todo), following is a quick set up guide for experienced users.
+
 To use the script on Android you need to usw Termux and install a few packages:
 
 - Install [Termux](https://termux.com/)
