@@ -72,7 +72,7 @@ To use the script on Windows you have to do a few extra stepps:
 
 ## Android
 
-For a step-by-step guide for the installation on Android [click here](todo), following is a quick set up guide for experienced users.
+For a step-by-step guide for the installation on Android [click here](https://github.com/Quasolaris/NewPipePlaylistExtractor/blob/main/Guides/android_manual.md), following is a quick set up guide for experienced users.
 
 To use the script on Android you need to usw Termux and install a few packages:
 
