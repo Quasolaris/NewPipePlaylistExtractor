@@ -72,40 +72,7 @@ To use the script on Windows you have to do a few extra stepps:
 
 ## Android
 
-For a step-by-step guide for the installation on Android [click here](https://github.com/Quasolaris/NewPipePlaylistExtractor/blob/main/Guides/android_manual.md), following is a quick set up guide for experienced users.
-
-To use the script on Android you need to usw Termux and install a few packages:
-
-- Install [Termux](https://termux.com/)
-
-- Make a folder named /NewPipe inside the Termux folder
-
-- Download the main.py from the repo and move into the /NewPipe folder
-
-- Create a Playlists folder /NewPipe/Playlists
-
-- Move your newpipe.db into the /NewPipe folder
-
-- Now open a Termux session and type following:
-
-``pkg install root-repo``<br>
-``pkg update``<br>
-``pkg install python``<br>
-``pip install db-sqlite3``<br>
-``pip install pytube``<br>
-``pip install pydub``<br>
-``pkg install ffmpeg``<br>
-
-- Now Termux is ready for the script
-
-``cd ./NewPipe``<br>
-``python main.py newpipe.db``
-
-- Choos your options and download the playlists
-
-- Move your playlists outside to the Music folder
-
-Now you can listen to the downloaded music on your phone.
+For a step-by-step installation guide for Android [click here](https://github.com/Quasolaris/NewPipePlaylistExtractor/blob/main/Guides/android_manual.md).
 
 ## Errors and Troubleshooting
 ### get_throttling_function_name: could not find match for multiple
