@@ -85,22 +85,22 @@ This is an error due to YouTube changing stuff, either to update or simply to at
 2. Open the cipher.py file in an editor of your choice (```nano -c cipher.py``` the -c flag displays the line number where your cursor is)
 3. Comment out the following lines: 272 and 273
 4. Paste the following regex beneath the lines you just commented out (Make sure the white spaces are correct, it is python after all):
-```
+```python
  r'a\.[a-zA-Z]\s*&&\s*\([a-z]\s*=\s*a\.get\("n"\)\)\s*&&\s*'
  r'\([a-z]\s*=\s*([a-zA-Z0-9$]{2,3})(\[\d+\])?\([a-z]\)'
 ```
 5. Now go to line 290 (or 288 if you deleted the regex lines instead of commenting them out) with CTRL+_ in nano you can jump to a specific line.
 6. Comment the following line out: 
-```
+```python
 nfunc=function_match.group(1)),
 ```
 
 7. Right underneath the now commented out line, place the following: 
-```
+```python
 nfunc=re.escape(function_match.group(1))),
 ```
 The file sector you changed should now look like this:
-```
+```python
 function_patterns = [
         # https://github.com/ytdl-org/youtube-dl/issues/29326#issuecomment-865985377
         # https://github.com/yt-dlp/yt-dlp/commit/48416bc4a8f1d5ff07d5977659cb8ece7640dcd8
