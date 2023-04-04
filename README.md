@@ -10,6 +10,9 @@ When you create a playlist in NewPipe it is not saved as a YouTube playlist and 
 
 [Buy Me A Coffe!](https://www.buymeacoffee.com/quasolaris)
 
+[Stargazers over time](https://starchart.cc/Quasolaris/NewPipePlaylistExtractor)
+
+
 ### Note: To use script on Windows or Andriod please see instructions below
 ### Note: MacOS users, you can follow the Linux guide
 
