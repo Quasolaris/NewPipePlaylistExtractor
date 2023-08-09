@@ -82,7 +82,11 @@ For a step-by-step installation guide for Android [click here](https://github.co
 ## Errors and Troubleshooting
 ### get_throttling_function_name: could not find match for multiple
 
-This is an error due to YouTube changing stuff, either to update or simply to attack Pytube, NewPipe and other clients/downloader. It is resolved with those simple steps:<br>
+This is an error due to YouTube changing stuff, either to update or simply to attack Pytube, NewPipe and other clients/downloader.
+
+### First: Check if Pytube has an update, maybe the Pytube team already fixed it.
+
+If no update was published or the error still persists, follow these steps:
 
 1. Go to the pytube package folder (normaly: \~/.local/lib/python3.9/site-packages/pytube)
 2. Open the cipher.py file in an editor of your choice (```nano -c cipher.py``` the -c flag displays the line number where your cursor is)
