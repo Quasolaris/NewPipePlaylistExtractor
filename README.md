@@ -88,7 +88,7 @@ This is an error due to YouTube changing stuff, either to update or simply to at
 
 If no update was published or the error still persists, follow these steps:
 
-1. Go to the pytube package folder (normaly: \~/.local/lib/python3.9/site-packages/pytube)
+1. Go to the pytube package folder (normaly: \~/.local/lib/python3.9/site-packages/pytube  or use `pip list -v` to find it if that doesn't work)
 2. Open the cipher.py file in an editor of your choice (```nano -c cipher.py``` the -c flag displays the line number where your cursor is)
 3. Comment out the following lines: 272 and 273
 4. Paste the following regex beneath the lines you just commented out (Make sure the white spaces are correct, it is python after all):
@@ -149,3 +149,23 @@ function_patterns = [
 ```
 8. Save and close the file
 9. You should now be able to download your playlists again
+
+
+### AttributeError: 'NoneType' object has no attribute 'span'
+
+This is an error due to YouTube changing stuff, either to update or simply to attack Pytube, NewPipe and other clients/downloader. See https://github.com/pytube/pytube/issues/1499#issuecomment-1473022893 for the issue and the fix.
+
+1. First: Check if Pytube has an update, maybe the Pytube team already fixed it. If no update was published or the error still persists, follow these steps:
+2. Go to the pytube package folder (normaly: \~/.local/lib/python3.9/site-packages/pytube or use `pip list -v` to find it if that doesn't work)
+3. Modify {path to pip packages}/pytube/cipher.py:
+
+        ```
+        transform_plan_raw = find_object_from_startpoint(raw_code, match.span()[1] - 1)
+        ```
+        to
+        
+        ```
+        transform_plan_raw = js
+        ```
+4. Save the file
+5. Try again.
