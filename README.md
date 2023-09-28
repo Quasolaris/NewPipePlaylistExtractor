@@ -159,13 +159,16 @@ This is an error due to YouTube changing stuff, either to update or simply to at
 2. Go to the pytube package folder (normaly: \~/.local/lib/python3.9/site-packages/pytube or use `pip list -v` to find it if that doesn't work)
 3. Modify {path to pip packages}/pytube/cipher.py:
 
-        ```
+
+```
         transform_plan_raw = find_object_from_startpoint(raw_code, match.span()[1] - 1)
-        ```
-        to
-        
-        ```
+```
+
+to 
+
+```
         transform_plan_raw = js
-        ```
+```
+
 4. Save the file
 5. Try again.
