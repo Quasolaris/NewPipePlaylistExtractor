@@ -200,7 +200,8 @@ def main(db_file):
     print("2\t|\tDownload single playlist")
     print("3\t|\tSave playlists to .csv file")
     print("4\t|\tSave playlists to .txt file")
-    print("5\t|\tCredits")
+    print("5\t|\tSave playlists to .m3u8 files")
+    print("6\t|\tCredits")
 
     userInput = str(input("Choose action: "))
     print("=========================")
@@ -250,8 +251,20 @@ def main(db_file):
                     writerTXT.write(song+"\n")
         print(text.GREEN + "Done!" + text.END)
 
-
     elif(userInput == "5"):
+        print("Saving m3u8 playlists into /Playlists/")
+
+        for playlist in Playlists:
+            playlistpath = f'./Playlists/{playlist}.m3u8'
+            print(f'Writing {playlistpath}')
+            with open(playlistpath, 'w') as writerM3U8:
+                writerM3U8.write("#EXTM3U\n")
+                for song in Playlists[playlist]:
+                    writerM3U8.write(song+"\n")
+        print(text.GREEN + "Done!" + text.END)
+
+
+    elif(userInput == "6"):
         credits()
 
     else:
