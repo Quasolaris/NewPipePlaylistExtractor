@@ -5,6 +5,7 @@ import sqlite3
 import sys
 import os
 import time
+import re
 from io import StringIO
 from sqlite3 import Error
 from pytube import YouTube
@@ -255,7 +256,7 @@ def main(db_file):
         print("Saving m3u8 playlists into /Playlists/")
 
         for playlist in Playlists:
-            playlistpath = f'./Playlists/{playlist}.m3u8'
+            playlistpath = './Playlists/' + re.sub('[*"/\\\\<>:|?]', '_', playlist) + '.m3u8'
             print(f'Writing {playlistpath}')
             with open(playlistpath, 'w') as writerM3U8:
                 writerM3U8.write("#EXTM3U\n")
