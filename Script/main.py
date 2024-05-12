@@ -66,6 +66,11 @@ def create_connection(db_file):
     """
     try:
         conn = sqlite3.connect(db_file)
+        # https://docs.python.org/3/library/sqlite3.html
+        def dict_factory(cursor, row):
+            fields = [column[0] for column in cursor.description]
+            return {key: value for key, value in zip(fields, row)}
+        conn.row_factory = dict_factory
         return conn
     except Error as e:
         print(e)
@@ -77,10 +82,7 @@ def get_rows(db_file):
     conn = create_connection(db_file)
 
     sqlCmds = """
-    select 
-            url,
-            title,
-            playlists.name as playlist_name
+    select *
     from streams 
     inner join playlist_stream_join on playlist_stream_join.stream_id = streams.uid
     inner join playlists on playlists.uid == playlist_stream_join.playlist_id
@@ -105,13 +107,12 @@ def getPlaylists(db_file):
     print("Extracting Playlists...")
     rows = get_rows(db_file)
 
-    PlaylistDir = {"": ""}
+    PlaylistDir = {}
     for row in rows:
-        PlaylistDir[row[2]] = []
+        PlaylistDir[row["name"]] = []
 
     for row in rows:
-        PlaylistDir[row[2]] += [row[0]]
-    del PlaylistDir[""]
+        PlaylistDir[row["name"]] += [row]
     return PlaylistDir
 
 
@@ -121,7 +122,8 @@ def downloadPlaylist(folderName, playlist, codec):
         os.mkdir("./Playlists/" + folderName)
 
     # download audio
-    for videoURL in playlist:
+    for song in playlist:
+        videoURL = song["url"]
         print(text.BLUE + "Downloading: " + videoURL + text.END)
         try:
             # Download .mp4 of YoutTube URL
@@ -212,14 +214,14 @@ def main(db_file):
     if(userInput == "1"):
         userCodec = chooseCodec()
 
-        print("Downlaoding all playlists...")
+        print("Downloading all playlists...")
         for playlist in Playlists:
             print("Downloading playlist: " + text.CYAN + playlist + text.END)
             downloadPlaylist(playlist, Playlists[playlist], userCodec)
         print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "2"):
-        print("Avaiable playlists")
+        print("Available playlists")
         for key in Playlists:
             print("=> " + key)
         userInput = str(input("Type playlist name: "))
@@ -237,7 +239,7 @@ def main(db_file):
         writerCSV = csv.writer(open("./Playlists/playlists.csv", "w"))
 
         for playlist, songs in Playlists.items():
-            writerCSV.writerow([playlist, songs])
+            writerCSV.writerow([playlist, [song["url"] for song in songs]])
         print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "4"):
@@ -249,7 +251,7 @@ def main(db_file):
                 writerTXT.write(playlist+"")
                 writerTXT.write("\n=========================\n")
                 for song in Playlists[playlist]:
-                    writerTXT.write(song+"\n")
+                    writerTXT.write(song["url"]+"\n")
         print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "5"):
@@ -262,7 +264,7 @@ def main(db_file):
                 writerM3U8.write("#EXTM3U\n")
                 writerM3U8.write("#PLAYLIST:" + playlist + "\n")
                 for song in Playlists[playlist]:
-                    writerM3U8.write(song+"\n")
+                    writerM3U8.write(song["url"]+"\n")
         print(text.GREEN + "Done!" + text.END)
 
 
