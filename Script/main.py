@@ -260,6 +260,7 @@ def main(db_file):
             print(f'Writing {playlistpath}')
             with open(playlistpath, 'w') as writerM3U8:
                 writerM3U8.write("#EXTM3U\n")
+                writerM3U8.write("#PLAYLIST:" + playlist + "\n")
                 for song in Playlists[playlist]:
                     writerM3U8.write(song+"\n")
         print(text.GREEN + "Done!" + text.END)
