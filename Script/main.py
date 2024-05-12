@@ -204,7 +204,8 @@ def main(db_file):
     print("3\t|\tSave playlists to .csv file")
     print("4\t|\tSave playlists to .txt file")
     print("5\t|\tSave playlists to .m3u8 files")
-    print("6\t|\tCredits")
+    print("6\t|\tDump contents of database to JSON (debug)")
+    print("7\t|\tCredits")
 
     userInput = str(input("Choose action: "))
     print("=========================")
@@ -267,8 +268,14 @@ def main(db_file):
                     writerM3U8.write(song["url"]+"\n")
         print(text.GREEN + "Done!" + text.END)
 
-
     elif(userInput == "6"):
+        print("Dumping all data managed by NewPipe Extractor to /Playlists/playlists.json")
+        import json
+        with open('./Playlists/playlists.json', 'w', encoding='utf-8') as writerJSON:
+            json.dump(Playlists, writerJSON, ensure_ascii=False, indent=4)
+        print(text.GREEN + "Done!" + text.END)
+
+    elif(userInput == "7"):
         credits()
 
     else:
