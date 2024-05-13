@@ -204,8 +204,9 @@ def main(db_file):
     print("3\t|\tSave playlists to .csv file")
     print("4\t|\tSave playlists to .txt file")
     print("5\t|\tSave playlists to .m3u8 files")
-    print("6\t|\tDump contents of database to JSON (debug)")
-    print("7\t|\tCredits")
+    print("6\t|\tSave playlists to .md file")
+    print("7\t|\tDump contents of database to JSON (debug)")
+    print("8\t|\tCredits")
 
     userInput = str(input("Choose action: "))
     print("=========================")
@@ -265,17 +266,32 @@ def main(db_file):
                 writerM3U8.write("#EXTM3U\n")
                 writerM3U8.write("#PLAYLIST:" + playlist + "\n")
                 for song in Playlists[playlist]:
-                    writerM3U8.write(song["url"]+"\n")
+                    writerM3U8.write("#EXTINF:" + str(song["duration"]) + "," + song["title"]+"\n")
+                    writerM3U8.write(song["url"] + "\n")
         print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "6"):
+        print("Saving playlists into /Playlists/playlists.md")
+
+        with open('./Playlists/playlists.md', 'w') as writerMD:
+            for playlist in Playlists:
+                writerMD.write(playlist+"")
+                writerMD.write("\n=========================\n")
+                writerMD.write("\n")
+                for song in Playlists[playlist]:
+                    mins, secs = divmod(song["duration"], 60)
+                    writerMD.write("* [{:s}]({:s}) ({:d}:{:02d})\n".format(song["title"], song["url"], mins, secs))
+                writerMD.write("\n")
+        print(text.GREEN + "Done!" + text.END)
+
+    elif(userInput == "7"):
         print("Dumping all data managed by NewPipe Extractor to /Playlists/playlists.json")
         import json
         with open('./Playlists/playlists.json', 'w', encoding='utf-8') as writerJSON:
             json.dump(Playlists, writerJSON, ensure_ascii=False, indent=4)
         print(text.GREEN + "Done!" + text.END)
 
-    elif(userInput == "7"):
+    elif(userInput == "8"):
         credits()
 
     else:
