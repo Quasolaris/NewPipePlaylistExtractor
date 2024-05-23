@@ -169,12 +169,12 @@ def downloadPlaylist(folderName, playlist, codec):
         videoURL = song["url"]
         print(text.BLUE + "Downloading: " + videoURL + text.END)
         try:
-            # Download .mp4 of YoutTube URL
+            # Download .mp4 of YouTube URL
             YouTubeVideo = YouTube(str(videoURL))
             songName = YouTubeVideo.streams[0].title
             destination = path + "/"
 
-            # Ignores URL if alreay downloaded in same codec
+            # Ignores URL if already downloaded in same codec
             if(not os.path.exists(destination + songName + "." + codec)):
                 audio = YouTubeVideo.streams.filter(only_audio=True)[0]
                 audioFile = audio.download(output_path=destination)
@@ -191,8 +191,8 @@ def downloadPlaylist(folderName, playlist, codec):
                     os.remove(audioFile)
             else:
                 print(text.CYAN + (destination + songName + "." + codec) + " already downloaded" + text.END)
-                # timeout for 3 sec, to circumwent DDoS protection of Youtube
-                print(text.YELLOW + "Waiting 3 sec. for Youtube DDoS protection circumvent" + text.END)
+                # timeout for 3 sec, to circumvent DDoS protection of YouTube
+                print(text.YELLOW + "Waiting 3 sec. for YouTube DDoS protection circumvent" + text.END)
                 time.sleep(3)
 
         except  Exception as e:

@@ -6,7 +6,7 @@
 
 This Python script extracts playlists made with the [NewPipe](https://newpipe.net/) app and allows you to download them as  audio-files. 
 
-When you create a playlist in NewPipe it is not saved as a YouTube playlist and can therefore not be downloaded via a playlist-link. This script allows you to extract the list of videos you have in a playlist and downlaod them as audio files. 
+When you create a playlist in NewPipe it is not saved as a YouTube playlist and can therefore not be downloaded via a playlist-link. This script allows you to extract the list of videos you have in a playlist and download them as audio files. 
 
 [Buy Me A Coffe!](https://www.buymeacoffee.com/quasolaris)
 
@@ -49,7 +49,7 @@ The script supports the following codecs:
 - [db-sqlite3](https://pypi.org/project/db-sqlite3/) ``pip install db-sqlite3``
 - [pydub](https://pypi.org/project/pydub/) ``pip install pydub``
 - [ffmpeg](https://ffmpeg.org/) ``sudo apt install ffmpeg``
-- The codec you want to download has to be  installed on your machine
+- The codec you want to download has to be installed on your machine
 
 ## Usage
 - Export your NewPipe data ([Click here to see how](https://newpipe.net/FAQ/tutorials/import-export-data/))
@@ -67,9 +67,9 @@ The playlists get saved into the /Script/Playlists folder
 Install the dependencies and you are good to go.
 
 ## Windows
-To use the script on Windows you have to do a few extra stepps:
+To use the script on Windows you have to do a few extra steps:
 
-- Dowanload [ffmpeg for windows](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-essentials.7z)
+- Download [ffmpeg for Windows](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-essentials.7z)
 - Unpack the archive
 - Copy all .exe files from /ARCHIVE_NAME/bin
 - Paste them inside the /Scripts folder
@@ -82,16 +82,16 @@ For a step-by-step installation guide for Android [click here](https://github.co
 ## Errors and Troubleshooting
 ### get_throttling_function_name: could not find match for multiple
 
-This is an error due to YouTube changing stuff, either to update or simply to attack Pytube, NewPipe and other clients/downloader.
+This is an error due to YouTube changing stuff, either to update or simply to attack Pytube, NewPipe and other clients/downloaders.
 
 ### First: Check if Pytube has an update, maybe the Pytube team already fixed it.
 
 If no update was published or the error still persists, follow these steps:
 
-1. Go to the pytube package folder (normaly: \~/.local/lib/python3.9/site-packages/pytube  or use `pip list -v` to find it if that doesn't work)
+1. Go to the pytube package folder (normally: \~/.local/lib/python3.9/site-packages/pytube  or use `pip list -v` to find it if that doesn't work)
 2. Open the cipher.py file in an editor of your choice (```nano -c cipher.py``` the -c flag displays the line number where your cursor is)
 3. Comment out the following lines: 272 and 273
-4. Paste the following regex beneath the lines you just commented out (Make sure the white spaces are correct, it is python after all):
+4. Paste the following regex beneath the lines you just commented out (Make sure the white spaces are correct, it is Python after all):
 ```python
 r'a\.[a-zA-Z]\s*&&\s*\([a-z]\s*=\s*a\.get\("n"\)\)\s*&&.*?\|\|\s*([a-z]+)',
 r'\([a-z]\s*=\s*([a-zA-Z0-9$]+)(\[\d+\])?\([a-z]\)',
@@ -156,7 +156,7 @@ function_patterns = [
 This is an error due to YouTube changing stuff, either to update or simply to attack Pytube, NewPipe and other clients/downloader. See https://github.com/pytube/pytube/issues/1499#issuecomment-1473022893 for the issue and the fix.
 
 1. First: Check if Pytube has an update, maybe the Pytube team already fixed it. If no update was published or the error still persists, follow these steps:
-2. Go to the pytube package folder (normaly: \~/.local/lib/python3.9/site-packages/pytube or use `pip list -v` to find it if that doesn't work)
+2. Go to the pytube package folder (normally: \~/.local/lib/python3.9/site-packages/pytube or use `pip list -v` to find it if that doesn't work).
 3. Modify {path to pip packages}/pytube/cipher.py:
 
 
@@ -170,5 +170,5 @@ to
         transform_plan_raw = js
 ```
 
-4. Save the file
+4. Save the file.
 5. Try again.
