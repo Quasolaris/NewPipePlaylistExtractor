@@ -342,5 +342,16 @@ def main(db_file):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    if(len(sys.argv) == 2):
+        main(sys.argv[1])
+    else:
+        print("""Usage: python3 main.py <database>
+
+To use this script:
+    1. Open the NewPipe menu, open the Settings, and select Content.
+    2. Tap the option to "Extract the database" as .ZIP file.
+    3. Extract the contents of this ZIP file.
+    4. You will find a file named newpipe.db.
+    5. Run this script, replacing <database> with the path of this file.""")
+
 
