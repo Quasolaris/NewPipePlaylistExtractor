@@ -5,41 +5,85 @@ import sqlite3
 import sys
 import os
 import time
+import re
 from io import StringIO
 from sqlite3 import Error
 from pytube import YouTube
 from pydub import AudioSegment
 
 def logo():
-    print(text.RED + "                          _   _                 ______  _                                       ")
-    print("                         | \ | |                | ___ \(_)                                      ")
-    print("                         |  \| |  ___ __      __| |_/ / _  _ __    ___                          ")
-    print("                         | . \` | / _ \\ \ /\ / /|  __/ | || '_ \  / _ \                         ")
-    print("                         | |\  ||  __/ \ V  V / | |    | || |_) ||  __/                         ")
-    print("                         \_| \_/ \___|  \_/\_/  \_|    |_|| .__/  \___|                         ")
-    print("                                                          | |                                   ")
-    print("                                                          |_|                                   ")
-    print(text.GREEN + "______  _                _  _       _     _____        _                       _                ")
-    print("| ___ \| |              | |(_)     | |   |  ___|      | |                     | |               ")
-    print("| |_/ /| |  __ _  _   _ | | _  ___ | |_  | |__  __  __| |_  _ __   __ _   ___ | |_   ___   _ __ ")
-    print("|  __/ | | / _\` || | | || || |/ __|| __| |  __| \ \/ /| __|| '__| / _\` | / __|| __| / _ \ | '__|")
-    print("| |    | || (_| || |_| || || |\__ \| |_  | |___  >  < | |_ | |   | (_| || (__ | |_ | (_) || |   ")
-    print("\_|    |_| \__,_| \__, ||_||_||___/ \__| \____/ /_/\_\ \__||_|    \__,_| \___| \__| \___/ |_|   ")
-    print("                   __/ |                                                                        ")
-    print("                  |___/                                                                         "+ text.END)
+    import shutil
+    terminal = shutil.get_terminal_size((0, 0))
+    if (terminal.columns < 80):
+        print(text.RED + r"""
+    _   _               ______ _               
+   | \ | |              | ___ (_)              
+   |  \| | _____      __| |_/ /_ _ __   ___    
+   | . \`|/ _ \ \ /\ / /|  __/| | '_ \ / _ \   
+   | |\  |  __/\ V  V / | |   | | |_) |  __/   
+   \_| \_/\___| \_/\_/  \_|   |_| .__/ \___|   """ + text.GREEN + r"""
+      ______ _             _ _  """ + text.RED + "| |" + text.GREEN + r""" _          """ + text.GREEN + r"""
+      | ___ \ |           | (_) """ + text.RED + "|_|" + text.GREEN + r"""| |        
+      | |_/ / | __ _ _   _| |_  ___| |_       
+      |  __/| |/ _\`| | | | | |/ __| __|      
+      | |   | | (_| | |_| | | |\__ \ |_       
+      \_|   |_|\__,_|\__, |_|_||___/\__|      
+  ____      _         __/ |     _              
+|  ___|    | |       |___/     | |             
+| |____  __| |_ _ __  __ _  ___| |_  ___  _ __ 
+|  __\ \/ /| __| '__|/ _\`|/ __| __|/ _ \| '__|
+| |__ >  < | |_| |  | (_| | (__| |_| (_) | |   
+\____/_/\_\ \__|_|   \__,_|\___ \__|\___/|_|   
+                                               """+ text.END)
+    elif (terminal.columns < 96):
+        print(text.RED + r"""
+                     _   _               ______ _                                
+                    | \ | |              | ___ (_)                               
+                    |  \| | _____      __| |_/ /_ _ __   ___                     
+                    | . \`|/ _ \ \ /\ / /|  __/| | '_ \ / _ \                    
+                    | |\  |  __/\ V  V / | |   | | |_) |  __/                    
+                    \_| \_/\___| \_/\_/  \_|   |_| .__/ \___|                    
+                                                 | |                             
+                                                 |_|                             """ + text.GREEN + r"""
+______ _             _ _      _   _____      _                   _              
+| ___ \ |           | (_)    | | |  ___|    | |                 | |             
+| |_/ / | __ _ _   _| |_  ___| |_| |____  __| |_ _ __  __ _  ___| |_  ___  _ __ 
+|  __/| |/ _\`| | | | | |/ __| __|  __\ \/ /| __| '__|/ _\`|/ __| __|/ _ \| '__|
+| |   | | (_| | |_| | | |\__ \ |_| |__ >  < | |_| |  | (_| | (__| |_| (_) | |   
+\_|   |_|\__,_|\__, |_|_||___/\__\____/_/\_\ \__|_|   \__,_|\___ \__|\___/|_|   
+                __/ |                                                           
+               |___/                                                            """+ text.END)
+    else:
+        print(text.RED + r"""
+                          _   _                 ______  _                                       
+                         | \ | |                | ___ \(_)                                      
+                         |  \| |  ___ __      __| |_/ / _  _ __    ___                          
+                         | . \`| / _ \\ \ /\ / /|  __/ | || '_ \  / _ \                         
+                         | |\  ||  __/ \ V  V / | |    | || |_) ||  __/                         
+                         \_| \_/ \___|  \_/\_/  \_|    |_|| .__/  \___|                         
+                                                          | |                                   
+                                                          |_|                                   """ + text.GREEN + r"""
+______  _                _  _       _     _____        _                       _                
+| ___ \| |              | |(_)     | |   |  ___|      | |                     | |               
+| |_/ /| |  __ _  _   _ | | _  ___ | |_  | |__  __  __| |_  _ __   __ _   ___ | |_   ___   _ __ 
+|  __/ | | / _\`|| | | || || |/ __|| __| |  __| \ \/ /| __|| '__| / _\`| / __|| __| / _ \ | '__|
+| |    | || (_| || |_| || || |\__ \| |_  | |___  >  < | |_ | |   | (_| || (__ | |_ | (_) || |   
+\_|    |_| \__,_| \__, ||_||_||___/ \__| \____/ /_/\_\ \__||_|    \__,_| \___| \__| \___/ |_|   
+                   __/ |                                                                        
+                  |___/                                                                         """+ text.END)
 
 def credits():
-    print("=============================================")
-    print("#           Script by "+ text.PURPLE + "Quasolaris" + text.END + "           #")
-    print("#        https://github.com/Quasolaris      #")
-    print("#                                           #")
-    print("#                                           #")
-    print("#           Code snippets used:             #")
-    print("# NewPipe SQLite extract: rachmadaniHaryono #")
-    print("#         Color class: DelftStack           #")
-    print("#                                           #")
-    print("#   (For links to the snippets see script)  #")
-    print("=============================================")
+    print("""=============================================
+#           Script by """+ text.PURPLE + "Quasolaris" + text.END + """            #
+#        https://github.com/Quasolaris      #
+#                                           #
+#                                           #
+#           Code snippets used:             #
+# NewPipe SQLite extract: rachmadaniHaryono #
+#         Color class: DelftStack           #
+#                                           #
+#   (For links to the snippets see script)  #
+=============================================""")
 
 # https://www.delftstack.com/howto/python/python-bold-text/
 class text:
@@ -65,6 +109,11 @@ def create_connection(db_file):
     """
     try:
         conn = sqlite3.connect(db_file)
+        # https://docs.python.org/3/library/sqlite3.html
+        def dict_factory(cursor, row):
+            fields = [column[0] for column in cursor.description]
+            return {key: value for key, value in zip(fields, row)}
+        conn.row_factory = dict_factory
         return conn
     except Error as e:
         print(e)
@@ -76,10 +125,7 @@ def get_rows(db_file):
     conn = create_connection(db_file)
 
     sqlCmds = """
-    select 
-            url,
-            title,
-            playlists.name as playlist_name
+    select *
     from streams 
     inner join playlist_stream_join on playlist_stream_join.stream_id = streams.uid
     inner join playlists on playlists.uid == playlist_stream_join.playlist_id
@@ -104,13 +150,12 @@ def getPlaylists(db_file):
     print("Extracting Playlists...")
     rows = get_rows(db_file)
 
-    PlaylistDir = {"": ""}
+    PlaylistDir = {}
     for row in rows:
-        PlaylistDir[row[2]] = []
+        PlaylistDir[row["name"]] = []
 
     for row in rows:
-        PlaylistDir[row[2]] += [row[0]]
-    del PlaylistDir[""]
+        PlaylistDir[row["name"]] += [row]
     return PlaylistDir
 
 
@@ -120,15 +165,16 @@ def downloadPlaylist(folderName, playlist, codec):
         os.mkdir("./Playlists/" + folderName)
 
     # download audio
-    for videoURL in playlist:
+    for song in playlist:
+        videoURL = song["url"]
         print(text.BLUE + "Downloading: " + videoURL + text.END)
         try:
-            # Download .mp4 of YoutTube URL
+            # Download .mp4 of YouTube URL
             YouTubeVideo = YouTube(str(videoURL))
             songName = YouTubeVideo.streams[0].title
             destination = path + "/"
 
-            # Ignores URL if alreay downloaded in same codec
+            # Ignores URL if already downloaded in same codec
             if(not os.path.exists(destination + songName + "." + codec)):
                 audio = YouTubeVideo.streams.filter(only_audio=True)[0]
                 audioFile = audio.download(output_path=destination)
@@ -145,8 +191,8 @@ def downloadPlaylist(folderName, playlist, codec):
                     os.remove(audioFile)
             else:
                 print(text.CYAN + (destination + songName + "." + codec) + " already downloaded" + text.END)
-                # timeout for 3 sec, to circumwent DDoS protection of Youtube
-                print(text.YELLOW + "Waiting 3 sec. for Youtube DDoS protection circumvent" + text.END)
+                # timeout for 3 sec, to circumvent DDoS protection of YouTube
+                print(text.YELLOW + "Waiting 3 sec. for YouTube DDoS protection circumvent" + text.END)
                 time.sleep(3)
 
         except  Exception as e:
@@ -200,7 +246,10 @@ def main(db_file):
     print("2\t|\tDownload single playlist")
     print("3\t|\tSave playlists to .csv file")
     print("4\t|\tSave playlists to .txt file")
-    print("5\t|\tCredits")
+    print("5\t|\tSave playlists to .m3u8 files")
+    print("6\t|\tSave playlists to .md file")
+    print("7\t|\tDump contents of database to JSON (debug)")
+    print("8\t|\tCredits")
 
     userInput = str(input("Choose action: "))
     print("=========================")
@@ -210,14 +259,14 @@ def main(db_file):
     if(userInput == "1"):
         userCodec = chooseCodec()
 
-        print("Downlaoding all playlists...")
+        print("Downloading all playlists...")
         for playlist in Playlists:
             print("Downloading playlist: " + text.CYAN + playlist + text.END)
             downloadPlaylist(playlist, Playlists[playlist], userCodec)
         print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "2"):
-        print("Avaiable playlists")
+        print("Available playlists")
         for key in Playlists:
             print("=> " + key)
         userInput = str(input("Type playlist name: "))
@@ -235,7 +284,7 @@ def main(db_file):
         writerCSV = csv.writer(open("./Playlists/playlists.csv", "w"))
 
         for playlist, songs in Playlists.items():
-            writerCSV.writerow([playlist, songs])
+            writerCSV.writerow([playlist, [song["url"] for song in songs]])
         print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "4"):
@@ -247,11 +296,45 @@ def main(db_file):
                 writerTXT.write(playlist+"")
                 writerTXT.write("\n=========================\n")
                 for song in Playlists[playlist]:
-                    writerTXT.write(song+"\n")
+                    writerTXT.write(song["url"]+"\n")
         print(text.GREEN + "Done!" + text.END)
 
-
     elif(userInput == "5"):
+        print("Saving m3u8 playlists into /Playlists/")
+
+        for playlist in Playlists:
+            playlistpath = './Playlists/' + re.sub('[*"/\\\\<>:|?]', '_', playlist) + '.m3u8'
+            print(f'Writing {playlistpath}')
+            with open(playlistpath, 'w') as writerM3U8:
+                writerM3U8.write("#EXTM3U\n")
+                writerM3U8.write("#PLAYLIST:" + playlist + "\n")
+                for song in Playlists[playlist]:
+                    writerM3U8.write("#EXTINF:" + str(song["duration"]) + "," + song["title"]+"\n")
+                    writerM3U8.write(song["url"] + "\n")
+        print(text.GREEN + "Done!" + text.END)
+
+    elif(userInput == "6"):
+        print("Saving playlists into /Playlists/playlists.md")
+
+        with open('./Playlists/playlists.md', 'w') as writerMD:
+            for playlist in Playlists:
+                writerMD.write(playlist+"")
+                writerMD.write("\n=========================\n")
+                writerMD.write("\n")
+                for song in Playlists[playlist]:
+                    mins, secs = divmod(song["duration"], 60)
+                    writerMD.write("* [{:s}]({:s}) ({:d}:{:02d})\n".format(song["title"], song["url"], mins, secs))
+                writerMD.write("\n")
+        print(text.GREEN + "Done!" + text.END)
+
+    elif(userInput == "7"):
+        print("Dumping all data managed by NewPipe Extractor to /Playlists/playlists.json")
+        import json
+        with open('./Playlists/playlists.json', 'w', encoding='utf-8') as writerJSON:
+            json.dump(Playlists, writerJSON, ensure_ascii=False, indent=4)
+        print(text.GREEN + "Done!" + text.END)
+
+    elif(userInput == "8"):
         credits()
 
     else:
@@ -259,5 +342,16 @@ def main(db_file):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    if(len(sys.argv) == 2):
+        main(sys.argv[1])
+    else:
+        print("""Usage: python3 main.py <database>
+
+To use this script:
+    1. Open the NewPipe menu, open the Settings, and select Content.
+    2. Tap the option to "Extract the database" as .ZIP file.
+    3. Extract the contents of this ZIP file.
+    4. You will find a file named newpipe.db.
+    5. Run this script, replacing <database> with the path of this file.""")
+
 
