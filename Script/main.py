@@ -328,7 +328,7 @@ def main(db_file):
         print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "7"):
-        print("Dumping all data managed by NewPipe Extractor to /Playlists/playlists.json")
+        print("Dumping all data managed by NewPipe Playlist Extractor to /Playlists/playlists.json")
         import json
         with open('./Playlists/playlists.json', 'w', encoding='utf-8') as writerJSON:
             json.dump(Playlists, writerJSON, ensure_ascii=False, indent=4)
