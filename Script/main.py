@@ -322,8 +322,23 @@ def main(db_file):
                 writerMD.write("\n=========================\n")
                 writerMD.write("\n")
                 for song in Playlists[playlist]:
-                    mins, secs = divmod(song["duration"], 60)
-                    writerMD.write("* [{:s}]({:s}) ({:d}:{:02d})\n".format(song["title"], song["url"], mins, secs))
+                    if(song["stream_type"] == "LIVE_STREAM"):
+                        duration = " (LIVE)"
+                    elif(song["duration"] >= 86400):
+                        mins, secs = divmod(song["duration"], 60)
+                        hours, mins = divmod(mins, 60)
+                        days, hours = divmod(hours, 24)
+                        duration = " ({:d}:{:02d}:{:02d}:{:02d})".format(days, hours, mins, secs)
+                    elif(song["duration"] >= 3600):
+                        mins, secs = divmod(song["duration"], 60)
+                        hours, mins = divmod(mins, 60)
+                        duration = " ({:d}:{:02d}:{:02d})".format(hours, mins, secs)
+                    elif(song["duration"] >= 0):
+                        mins, secs = divmod(song["duration"], 60)
+                        duration = " ({:d}:{:02d})".format(mins, secs)
+                    else:
+                        duration = ""
+                    writerMD.write("* [{:s}]({:s}){:s}\n".format(song["title"], song["url"], duration))
                 writerMD.write("\n")
         print(text.GREEN + "Done!" + text.END)
 
