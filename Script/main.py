@@ -6,6 +6,8 @@ import sys
 import os
 import time
 import re
+import zipfile
+import tempfile
 from io import StringIO
 from sqlite3 import Error
 from pytube import YouTube
@@ -105,24 +107,36 @@ def create_connection(db_file):
     """ create a database connection to the SQLite database
         specified by the db_file
     :param db_file: database file
-    :return: Connection object or None
+    :return:
+        Connection object or None
+        Temporary folder, if any
     """
     try:
+        """ check if db_file is a zip file.
+            If it is, try to connect to newpipe.db inside.
+            If not, assume it is the database, uncompressed
+        """
+        temp_folder = None
+        if(db_file[-4:] == '.zip'):
+            with zipfile.ZipFile(db_file) as newpipezip:
+                temp_folder = tempfile.TemporaryDirectory(delete=False)
+                db_file = newpipezip.extract('newpipe.db', path=temp_folder.name)
+                print(f"Automatically extracted database to {text.CYAN}{db_file}{text.END}")
         conn = sqlite3.connect(db_file)
         # https://docs.python.org/3/library/sqlite3.html
         def dict_factory(cursor, row):
             fields = [column[0] for column in cursor.description]
             return {key: value for key, value in zip(fields, row)}
         conn.row_factory = dict_factory
-        return conn
+        return conn, temp_folder
     except Error as e:
         print(e)
  
-    return None
+    return None, None
 
 
 def get_rows(db_file):
-    conn = create_connection(db_file)
+    conn, temp_folder = create_connection(db_file)
 
     sqlCmds = """
     select *
@@ -133,6 +147,10 @@ def get_rows(db_file):
     cur = conn.cursor()
     cur.execute(sqlCmds)
     rows = cur.fetchall()
+    conn.close()
+    if temp_folder is not None:
+        temp_folder.cleanup()
+        print(f"Data loaded into memory, deleted temporary folder {text.CYAN}{temp_folder.name}{text.END}")
     return rows
 # --------------------
 
@@ -365,8 +383,7 @@ if __name__ == '__main__':
 To use this script:
     1. Open the NewPipe menu, open the Settings, and select Content.
     2. Tap the option to "Extract the database" as .ZIP file.
-    3. Extract the contents of this ZIP file.
-    4. You will find a file named newpipe.db.
-    5. Run this script, replacing <database> with the path of this file.""")
+    3. Run this script, replacing <database> with the path of the ZIP file.
+       (Or else, replace <database> with the path of the file newpipe.db inside.)""")
 
 
