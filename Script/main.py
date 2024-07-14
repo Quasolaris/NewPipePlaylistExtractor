@@ -139,7 +139,13 @@ def get_rows(db_file):
     conn, temp_folder = create_connection(db_file)
 
     sqlCmds = """
-    select *
+    select service_id, url, title, stream_type, duration, uploader, uploader_url,
+    streams.thumbnail_url as video_thumbnail_url,
+    view_count, textual_upload_date, upload_date, is_upload_date_approximation,
+    join_index,
+    name,
+    playlists.thumbnail_url as playlist_thumbnail_url,
+    display_index
     from streams 
     inner join playlist_stream_join on playlist_stream_join.stream_id = streams.uid
     inner join playlists on playlists.uid == playlist_stream_join.playlist_id
@@ -158,7 +164,8 @@ def getPlaylists(db_file):
     """
     Sorting playlists
     Dictionary has playlist name as key 
-    and the list of URLs as Value
+    and a list of videos as value.
+    Each video is represented by a dict (see get_rows()).
 
     Folder gets named after Key, and URLs
     downloaded into given folder
