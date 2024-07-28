@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+
 import csv
 import sqlite3
 import sys
@@ -100,6 +101,7 @@ class text:
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 
+database_size_limit = 1024**3 # in bytes. This script will refuse to extract files going over this size.
 
 # Database extract SQlite by rachmadaniHaryono, found on comment: https://github.com/TeamNewPipe/NewPipe/issues/1788#issuecomment-500805819
 # --------------------
@@ -119,6 +121,12 @@ def create_connection(db_file):
         temp_folder = None
         if(db_file[-4:] == '.zip'):
             with zipfile.ZipFile(db_file) as newpipezip:
+                db_file = newpipezip.getinfo('newpipe.db')
+                # If newpipe.db is not contained, a KeyError exception will be raised.
+                # If it is contained, test if uncompressed size is under database_size_limit
+                if db_file.file_size > database_size_limit:
+                    print(f"{text.RED}newpipe.db weighs {db_file.file_size} bytes. This script will not extract files over {database_size_limit} bytes.{text.END}")
+                    return None, None
                 temp_folder = tempfile.TemporaryDirectory(delete=False)
                 db_file = newpipezip.extract('newpipe.db', path=temp_folder.name)
                 print(f"Automatically extracted database to {text.CYAN}{db_file}{text.END}")
@@ -129,14 +137,16 @@ def create_connection(db_file):
             return {key: value for key, value in zip(fields, row)}
         conn.row_factory = dict_factory
         return conn, temp_folder
+    except KeyError:
+        print(text.RED + "No newpipe.db item was found. This is not a NewPipe database." + text.END)
     except Error as e:
-        print(e)
- 
-    return None, None
+        print(text.RED + e + text.END)
 
+    return None, None
 
 def get_rows(db_file):
     conn, temp_folder = create_connection(db_file)
+    if conn is None: return None
 
     sqlCmds = """
     select service_id, url, title, stream_type, duration, uploader, uploader_url,
@@ -174,6 +184,7 @@ def getPlaylists(db_file):
     """
     print("Extracting Playlists...")
     rows = get_rows(db_file)
+    if rows is None: return None
 
     PlaylistDir = {}
     for row in rows:
@@ -261,6 +272,9 @@ def main(db_file):
     logo()
 
     Playlists = getPlaylists(db_file)
+    if Playlists is None:
+        print("No playlists could be extracted. Exiting.")
+        sys.exit()
 
     playlistCount = len(Playlists)
 
