@@ -4,7 +4,7 @@ In this step by step guide will be shown how to use the playlist extractor on yo
 
 ## Steps to do before you start with this guide
 
-- Install Termux, you can get it here [F-Droid](https://f-droid.org/en/packages/com.termux/) or here [Google PlayStore](https://play.google.com/store/apps/details?id=com.termux&gl=US)
+- Install Termux, you can get it from [F-Droid](https://f-droid.org/en/packages/com.termux/) or [Google Play Store](https://play.google.com/store/apps/details?id=com.termux&gl=US)
 
 ## Installing Playlist Extractor
 
@@ -27,13 +27,13 @@ It will look like this:
 
 <img src="android_screenshots/package_command.jpg" alt="Package command" width="200"/>
 
-Now hit enter, Termux will install the packages and prompt you sporadically for input, type "y" and hit enter to proceed if this occurs. After it is finished you can type ```clear``` and hit enter, this clears the terminal window.
+Now hit enter, Termux will install the packages and prompt you sporadically for input, type "y" and hit enter to proceed if this occurs. After it is finished you can type `clear` and hit enter, this clears the terminal window.
 
 <img src="android_screenshots/packages_installed.jpg" alt="Installation complete" width="200"/>
 
 ### 2. Get the main.py file from the GitHub repository
 
-Now you can download the main.py file into your Termux folder, you can do that too in Termux. We will use the ```wget``` command to do so, copy and paste the following into Termux:
+Now you can download the main.py file into your Termux folder, you can do that too in Termux. We will use the `wget` command to do so, copy and paste the following into Termux:
 ```
 wget https://raw.githubusercontent.com/Quasolaris/NewPipePlaylistExtractor/main/Script/main.py
 ```
@@ -51,7 +51,7 @@ The script needs a Playlist directory to work, for this we create a new director
 ```
 mkdir Playlists
 ```
-By using ```ls``` again you should now see a new directory named "Playlists".
+By using `ls` again you should now see a new directory named "Playlists".
 
 <img src="android_screenshots/playlist_dir.jpg" alt="Playlist directory" width="200"/>
 
@@ -72,7 +72,7 @@ The database will be saved as a ZIP file inside your Termux directory, now go to
 <img src="android_screenshots/click_extract.jpg" alt="Extract files" width="200"/>
 <img src="android_screenshots/extract_zip.jpg" alt="Extract files" width="200"/>
 
-By using ```ls``` you now should have main.py, newpipe.db and newpipe.settings in your directory:
+By using `ls` you now should have main.py, newpipe.db and newpipe.settings in your directory:
 
 <img src="android_screenshots/database_in_folder.jpg" alt="All files ready" width="200"/>
 

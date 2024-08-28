@@ -8,12 +8,12 @@ This Python script extracts playlists made with the [NewPipe](https://newpipe.ne
 
 When you create a playlist in NewPipe it is not saved as a YouTube playlist and can therefore not be downloaded via a playlist-link. This script allows you to extract the list of videos you have in a playlist and download them as audio files. 
 
-[Buy Me A Coffe!](https://www.buymeacoffee.com/quasolaris)
+[Buy Me A Coffee!](https://www.buymeacoffee.com/quasolaris)
 
 [Stargazers over time](https://starchart.cc/Quasolaris/NewPipePlaylistExtractor)
 
 
-### Note: To use script on Windows or Andriod please see instructions below
+### Note: To use script on Windows or Android please see instructions below
 ### Note: MacOS users, you can follow the Linux guide
 
 # Table of Contents
@@ -56,11 +56,11 @@ The script supports the following codecs:
 ## Usage
 - Export your NewPipe data ([Click here to see how](https://newpipe.net/FAQ/tutorials/import-export-data/))
 - Load it to your PC
-- Extract it (You will need the newpipe.db file)
-- Run script with path to your newpipe.db file ``python3 main.py newpipe.db``
+- Optionally, extract the newpipe.db file from it
+- Run script with path to the NewPipe data (`python3 main.py NewPipe_<timestamp>.zip`) or the extracted newpipe.db file (`python3 main.py newpipe.db`)
 - Choose action
 - Follow instructions
-- To update playlists just repeat with new .db file, already downloaded files get ignored
+- To update playlists just repeat with new .db or .zip file. Already downloaded files will be ignored
 - Enjoy your music!
 
 The playlists get saved into the /Script/Playlists folder
