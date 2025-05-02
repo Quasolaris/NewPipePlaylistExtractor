@@ -57,7 +57,7 @@ The script supports the following codecs:
 - Export your NewPipe data ([Click here to see how](https://newpipe.net/FAQ/tutorials/import-export-data/))
 - Load it to your PC
 - Optionally, extract the newpipe.db file from it
-- Run script with path to the NewPipe data (`python3 main.py NewPipe_<timestamp>.zip`) or the extracted newpipe.db file (`python3 main.py newpipe.db`)
+- Run script with path to the NewPipe data ZIP file (`python3 main.py NewPipe_<timestamp>.zip`) or the extracted newpipe.db file (`python3 main.py newpipe.db`)
 - Choose action
 - Follow instructions
 - To update playlists just repeat with new .db or .zip file. Already downloaded files will be ignored
@@ -81,7 +81,7 @@ To use the script on Windows you have to do a few extra steps:
 
 For a step-by-step installation guide for Android [click here](https://github.com/Quasolaris/NewPipePlaylistExtractor/blob/main/Guides/android_manual.md).
 
-## Errors and Troubleshooting
+## [DEPRICATED USE PYTUBEFIX PIP PACKAGE] - Errors and Troubleshooting
 ### get_throttling_function_name: could not find match for multiple
 
 This is an error due to YouTube changing stuff, either to update or simply to attack Pytube, NewPipe and other clients/downloaders.
