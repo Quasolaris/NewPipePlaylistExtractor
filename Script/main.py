@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
+
 import csv
 import sqlite3
 import sys
 import os
 import time
 import re
+import zipfile
+import tempfile
 from io import StringIO
 from sqlite3 import Error
 from pytubefix import YouTube
@@ -99,6 +102,7 @@ class text:
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 
+database_size_limit = 1024**3 # in bytes. This script will refuse to extract files going over this size.
 
 # Database extract SQlite by rachmadaniHaryono, found on comment: https://github.com/TeamNewPipe/NewPipe/issues/1788#issuecomment-500805819
 # --------------------
@@ -106,27 +110,52 @@ def create_connection(db_file):
     """ create a database connection to the SQLite database
         specified by the db_file
     :param db_file: database file
-    :return: Connection object or None
+    :return:
+        Connection object or None
+        Temporary folder, if any
     """
     try:
+        """ check if db_file is a zip file.
+            If it is, try to connect to newpipe.db inside.
+            If not, assume it is the database, uncompressed
+        """
+        temp_folder = None
+        if(db_file[-4:] == '.zip'):
+            with zipfile.ZipFile(db_file) as newpipezip:
+                db_file = newpipezip.getinfo('newpipe.db')
+                # If newpipe.db is not contained, a KeyError exception will be raised.
+                # If it is contained, test if uncompressed size is under database_size_limit
+                if db_file.file_size > database_size_limit:
+                    print(f"{text.RED}newpipe.db weighs {db_file.file_size} bytes. This script will not extract files over {database_size_limit} bytes.{text.END}")
+                    return None, None
+                temp_folder = tempfile.TemporaryDirectory()
+                db_file = newpipezip.extract('newpipe.db', path=temp_folder.name)
+                print(f"Automatically extracted database to {text.CYAN}{db_file}{text.END}")
         conn = sqlite3.connect(db_file)
         # https://docs.python.org/3/library/sqlite3.html
         def dict_factory(cursor, row):
             fields = [column[0] for column in cursor.description]
             return {key: value for key, value in zip(fields, row)}
         conn.row_factory = dict_factory
-        return conn
+        return conn, temp_folder
+    except KeyError:
+        print(text.RED + "No newpipe.db item was found. This is not a NewPipe database." + text.END)
     except Error as e:
-        print(e)
- 
-    return None
+        print(text.RED + e + text.END)
 
+    return None, None
 
 def get_rows(db_file):
-    conn = create_connection(db_file)
+    conn, temp_folder = create_connection(db_file)
+    if conn is None: return None
 
     sqlCmds = """
-    select *
+    select service_id, url, title, stream_type, duration, uploader, uploader_url,
+    streams.thumbnail_url as video_thumbnail_url,
+    view_count, textual_upload_date, upload_date, is_upload_date_approximation,
+    join_index,
+    name,
+    display_index
     from streams 
     inner join playlist_stream_join on playlist_stream_join.stream_id = streams.uid
     inner join playlists on playlists.uid == playlist_stream_join.playlist_id
@@ -134,6 +163,10 @@ def get_rows(db_file):
     cur = conn.cursor()
     cur.execute(sqlCmds)
     rows = cur.fetchall()
+    conn.close()
+    if temp_folder is not None:
+        temp_folder.cleanup()
+        print(f"Data loaded into memory, deleted temporary folder {text.CYAN}{temp_folder.name}{text.END}")
     return rows
 # --------------------
 
@@ -141,7 +174,8 @@ def getPlaylists(db_file):
     """
     Sorting playlists
     Dictionary has playlist name as key 
-    and the list of URLs as Value
+    and a list of videos as value.
+    Each video is represented by a dict (see get_rows()).
 
     Folder gets named after Key, and URLs
     downloaded into given folder
@@ -150,6 +184,7 @@ def getPlaylists(db_file):
     """
     print("Extracting Playlists...")
     rows = get_rows(db_file)
+    if rows is None: return None
 
     PlaylistDir = {}
     for row in rows:
@@ -237,6 +272,9 @@ def main(db_file):
     logo()
 
     Playlists = getPlaylists(db_file)
+    if Playlists is None:
+        print("No playlists could be extracted. Exiting.")
+        sys.exit()
 
     playlistCount = len(Playlists)
 
@@ -323,13 +361,28 @@ def main(db_file):
                 writerMD.write("\n=========================\n")
                 writerMD.write("\n")
                 for song in Playlists[playlist]:
-                    mins, secs = divmod(song["duration"], 60)
-                    writerMD.write("* [{:s}]({:s}) ({:d}:{:02d})\n".format(song["title"], song["url"], mins, secs))
+                    if(song["stream_type"] == "LIVE_STREAM"):
+                        duration = " (LIVE)"
+                    elif(song["duration"] >= 86400):
+                        mins, secs = divmod(song["duration"], 60)
+                        hours, mins = divmod(mins, 60)
+                        days, hours = divmod(hours, 24)
+                        duration = " ({:d}:{:02d}:{:02d}:{:02d})".format(days, hours, mins, secs)
+                    elif(song["duration"] >= 3600):
+                        mins, secs = divmod(song["duration"], 60)
+                        hours, mins = divmod(mins, 60)
+                        duration = " ({:d}:{:02d}:{:02d})".format(hours, mins, secs)
+                    elif(song["duration"] >= 0):
+                        mins, secs = divmod(song["duration"], 60)
+                        duration = " ({:d}:{:02d})".format(mins, secs)
+                    else:
+                        duration = ""
+                    writerMD.write("* [{:s}]({:s}){:s}\n".format(song["title"], song["url"], duration))
                 writerMD.write("\n")
         print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "7"):
-        print("Dumping all data managed by NewPipe Extractor to /Playlists/playlists.json")
+        print("Dumping all data managed by NewPipe Playlist Extractor to /Playlists/playlists.json")
         import json
         with open('./Playlists/playlists.json', 'w', encoding='utf-8') as writerJSON:
             json.dump(Playlists, writerJSON, ensure_ascii=False, indent=4)
@@ -349,10 +402,13 @@ if __name__ == '__main__':
         print("""Usage: python3 main.py <database>
 
 To use this script:
-    1. Open the NewPipe menu, open the Settings, and select Content.
+    1. Open the NewPipe menu, open the Settings, and select Backup and Restore.
     2. Tap the option to "Extract the database" as .ZIP file.
-    3. Extract the contents of this ZIP file.
-    4. You will find a file named newpipe.db.
-    5. Run this script, replacing <database> with the path of this file.""")
+    3. Run this script, replacing <database> with the path of the ZIP file.
+       (Or else, replace <database> with the path of the file newpipe.db inside.)
+
+Examples:
+       $ python3 main.py NEWPIPE.zip
+       $ python3 main.py newpipe.db""")
 
 
