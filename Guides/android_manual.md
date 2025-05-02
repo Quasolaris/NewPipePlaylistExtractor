@@ -57,7 +57,7 @@ By using `ls` again you should now see a new directory named "Playlists".
 
 ### 4. Export your NewPipe Database
 
-Now we are set to use the script, to extract your playlists a NewPipe-Database is needed. To get it we need to export the NewPipe Database by clicking "Export database" under Settings -> Content:
+Now we are set to use the script, to extract your playlists a NewPipe-Database is needed. To get it we need to export the NewPipe Database by clicking "Export database" under Settings -> Backup and Restore (earlier it was Content, ignore secreenshot here):
 
 <img src="android_screenshots/export_database.jpg" alt="New Pipe Export" width="200"/>
 
