@@ -11,7 +11,7 @@ import zipfile
 import tempfile
 from io import StringIO
 from sqlite3 import Error
-from pytube import YouTube
+from pytubefix import YouTube
 from pydub import AudioSegment
 
 def logo():
@@ -127,7 +127,7 @@ def create_connection(db_file):
                 if db_file.file_size > database_size_limit:
                     print(f"{text.RED}newpipe.db weighs {db_file.file_size} bytes. This script will not extract files over {database_size_limit} bytes.{text.END}")
                     return None, None
-                temp_folder = tempfile.TemporaryDirectory(delete=False)
+                temp_folder = tempfile.TemporaryDirectory()
                 db_file = newpipezip.extract('newpipe.db', path=temp_folder.name)
                 print(f"Automatically extracted database to {text.CYAN}{db_file}{text.END}")
         conn = sqlite3.connect(db_file)
@@ -154,7 +154,6 @@ def get_rows(db_file):
     view_count, textual_upload_date, upload_date, is_upload_date_approximation,
     join_index,
     name,
-    playlists.thumbnail_url as playlist_thumbnail_url,
     display_index
     from streams 
     inner join playlist_stream_join on playlist_stream_join.stream_id = streams.uid
