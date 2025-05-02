@@ -401,7 +401,7 @@ if __name__ == '__main__':
         print("""Usage: python3 main.py <database>
 
 To use this script:
-    1. Open the NewPipe menu, open the Settings, and select Content.
+    1. Open the NewPipe menu, open the Settings, and select Backup and Restore.
     2. Tap the option to "Extract the database" as .ZIP file.
     3. Run this script, replacing <database> with the path of the ZIP file.
        (Or else, replace <database> with the path of the file newpipe.db inside.)
