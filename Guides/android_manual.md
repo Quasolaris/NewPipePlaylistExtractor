@@ -18,7 +18,7 @@ pkg install root-repo
 pkg update
 pkg install python
 pip install db-sqlite3
-pip install pytube
+pip install pytubefix
 pip install pydub
 pkg install ffmpeg
 pkg install wget
@@ -95,7 +95,7 @@ pkg install root-repo
 pkg update
 pkg install python
 pip install db-sqlite3
-pip install pytube
+pip install pytubefix
 pip install pydub
 pkg install ffmpeg
 pkg install wget
