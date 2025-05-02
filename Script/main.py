@@ -8,8 +8,9 @@ import time
 import re
 from io import StringIO
 from sqlite3 import Error
-from pytube import YouTube
+from pytubefix import YouTube
 from pydub import AudioSegment
+
 
 def logo():
     import shutil
