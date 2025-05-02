@@ -1,0 +1,14 @@
+As the project is small, there are not many rules for the moment:
+- Comment newly written code if needed
+- Change the README and Android Guide if functionalities change
+- Test your code before requesting a Merge or Review
+- Commit Message Format
+  - [ACTION] - MESSAGE
+  - Example: `[ADD] - Added CSV format to be exported`
+  - Possible actions:
+    - ADD
+    - CHG (for change)
+    - FIX
+    - DEL
+    - CRT (for created)
+    - If an action can not be described with those, write it into the pull request with your three letter assignment and I add it here.
