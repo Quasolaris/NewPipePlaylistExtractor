@@ -305,12 +305,17 @@ def main(db_file):
         print(text.GREEN + "Done!" + text.END)
 
     elif(userInput == "2"):
+        playlistIndex = {}
         print("Available playlists")
+        index = 0
+        
         for key in Playlists:
-            print("=> " + key)
-        userInput = str(input("Type playlist name: "))
+            playlistIndex[index] = key
+            print("{0} => {1}".format(index,key))
+            index = index + 1
+        userInput = str(input("Type playlist index: "))
 
-        if(userInput in Playlists):
+        if(playlistIndex[int(userInput)] in Playlists):
             userCodec = chooseCodec()
             downloadPlaylist(userInput, Playlists[userInput], userCodec)
             print(text.GREEN + "Done!" + text.END)
