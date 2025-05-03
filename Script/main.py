@@ -75,20 +75,6 @@ ______  _                _  _       _     _____        _                       _
 \_|    |_| \__,_| \__, ||_||_||___/ \__| \____/ /_/\_\ \__||_|    \__,_| \___| \__| \___/ |_|   
                    __/ |                                                                        
                   |___/                                                                         """+ text.END)
-
-def credits():
-    print("""=============================================
-#           Script by """+ text.PURPLE + "Quasolaris" + text.END + """            #
-#        https://github.com/Quasolaris      #
-#                                           #
-#                                           #
-#           Code snippets used:             #
-# NewPipe SQLite extract: rachmadaniHaryono #
-#         Color class: DelftStack           #
-#                                           #
-#   (For links to the snippets see script)  #
-=============================================""")
-
 # https://www.delftstack.com/howto/python/python-bold-text/
 class text:
    PURPLE = '\033[95m'
@@ -288,7 +274,6 @@ def main(db_file):
     print("5\t|\tSave playlists to .m3u8 files")
     print("6\t|\tSave playlists to .md file")
     print("7\t|\tDump contents of database to JSON (debug)")
-    print("8\t|\tCredits")
 
     userInput = str(input("Choose action: "))
     print("=========================")
@@ -392,9 +377,6 @@ def main(db_file):
         with open('./Playlists/playlists.json', 'w', encoding='utf-8') as writerJSON:
             json.dump(Playlists, writerJSON, ensure_ascii=False, indent=4)
         print(text.GREEN + "Done!" + text.END)
-
-    elif(userInput == "8"):
-        credits()
 
     else:
         print(text.YELLOW + "Wrong input, ending script" + text.END)
