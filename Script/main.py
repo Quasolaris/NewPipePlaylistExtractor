@@ -300,9 +300,10 @@ def main(db_file):
             index = index + 1
         userInput = str(input("Type playlist index: "))
 
-        if(playlistIndex[int(userInput)] in Playlists):
+        chosenPlaylist = playlistIndex[int(userInput)]
+        if (chosenPlaylist in Playlists):
             userCodec = chooseCodec()
-            downloadPlaylist(userInput, Playlists[userInput], userCodec)
+            downloadPlaylist(chosenPlaylist, Playlists[chosenPlaylist], userCodec)
             print(text.GREEN + "Done!" + text.END)
             
         else:
