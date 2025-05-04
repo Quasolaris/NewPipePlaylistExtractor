@@ -13,7 +13,7 @@ from io import StringIO
 from sqlite3 import Error
 from pytubefix import YouTube
 from pydub import AudioSegment
-from nicegui import ui
+from nicegui import events, ui
 
 class text:
    PURPLE = '\033[95m'
@@ -120,10 +120,6 @@ def getPlaylists(db_file):
     return PlaylistDir
 
 
-
-
-
-
 def main(db_file):
     ui.html("NewPipe Playlist Extractor")
     playlists = getPlaylists(db_file)
@@ -141,23 +137,43 @@ def main(db_file):
 
         ui.html("{0} Playlists Extracted".format(playlistCount))
 
+        def handle_theme_change(e: events.ValueChangeEventArguments):
+            gridPlaylist.classes(add='ag-theme-balham-dark' if e.value else 'ag-theme-balham',
+                         remove='ag-theme-balham ag-theme-balham-dark')
+
+       
+        
+
+
 
         gridPlaylist = ui.aggrid({
         'defaultColDef': {'flex': 1},
-        'columnDefs' : [{'headerName': 'Playlist', 'field' : 'playlist',  'filter': 'agTextColumnFilter', 'floatingFilter': True},
-        {'headerName': 'Track Count', 'field' : 'count'}],
+        'columnDefs' : [{'headerName': 'Playlist', 'field' : 'playlist',  'filter': 'agTextColumnFilter', 'floatingFilter': True, 'checkboxSelection': True},
+        {'headerName': 'Track Count', 'field' : 'count', 'filter': 'agTextColumnFilter', 'floatingFilter': True},],
         'rowData' : [{'playlist' : playlist, 'count' : len(playlists[playlist])} for playlist in list(playlists.keys())],
         'rowSelection': 'multiple',
-        })
+        }).classes('max-h-100')
 
 
+        ui.html("Select Audio codec (default is MP3)")
 
-        ui.button('Download Selected', on_click=lambda: download_selected_rows())
+        codecChoice = ui.toggle({1: 'MP3', 2: 'WAV', 3: 'FLAC', 4: "ACC", 5 : "OPUS", 6 : "MP4"}, value=1)
+
+        ui.html("Actions")
+
+        
         ui.button('Select all', on_click=lambda: gridPlaylist.run_grid_method('selectAll'))  
         ui.button('Deselect all', on_click=lambda: gridPlaylist.run_grid_method('deselectAll')) 
 
 
-        codecChoice = ui.toggle({1: 'MP3', 2: 'WAV', 3: 'FLAC', 4: "ACC", 5 : "OPUS", 6 : "MP4"})
+        ui.html("No feedback implemented yet, check Terminal for updates:")
+
+        ui.button('Download Selected', on_click=lambda: download_selected_rows())
+
+        
+        dark = ui.dark_mode(value=True)
+        ui.switch('Dark mode', on_change=handle_theme_change).bind_value(dark)
+ 
 
         async def download_selected_rows():
             rows = await gridPlaylist.get_selected_rows()
@@ -167,14 +183,14 @@ def main(db_file):
                 for row in rows:
                     playlist = row["playlist"]
                     await downloadPlaylist(playlist, playlists[playlist], codecChoice.value)
-
+ 
                     
             else:
-                ui.notify('No rows selected.')
+                ui.notify('No rows selected', type='negative')
 
   
         async def downloadPlaylist(folderName, playlist, setCodec):
-
+            
             if(setCodec == 1):
                 codec = "mp3"
             elif(setCodec == 2):
@@ -188,9 +204,8 @@ def main(db_file):
             elif(setCodec == 6):
                 codec = "mp4"
             else:
-                codec = "mp3"
+                codec = "mp3"    
 
-            ui.notify("Downloading {0} as {1}".format(folderName, codec))
             path = "./Playlists/" + folderName
             if(not os.path.exists(path)):
                 os.mkdir("./Playlists/" + folderName)
@@ -226,7 +241,7 @@ def main(db_file):
                         print(text.YELLOW + "Waiting 3 sec. for YouTube DDoS protection circumvent" + text.END)
                         time.sleep(3)
 
-                    ui.notify("Finished Downloading {0}".format(folderName))
+                    ui.notify("Finished Downloading - \"{0}\"".format(folderName), type='positive')
                 except  Exception as e:
                     print(text.RED + str(e) + text.END)
                     print("If Error is: " + text.RED + "get_throttling_function_name: could not find match for multiple" + text.END)
