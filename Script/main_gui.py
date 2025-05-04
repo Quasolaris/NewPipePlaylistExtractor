@@ -146,9 +146,7 @@ def main(db_file):
     @ui.page('/')
     def page():
 
-        ui.html("NewPipe Playlist Extractor")
-
-        
+    
         async def handle_upload(e: events.UploadEventArguments):
 
             playlistsObject._playlists = getPlaylists(e.name)
@@ -254,6 +252,8 @@ def main(db_file):
 
 
         # Start GUI components
+        ui.label("NewPipe Playlist Extractor").style('color: #ff2d00; font-size: 200%; font-weight: 300')
+        ui.html("Upload NewPipe ZIP file")
         uploadContent = ui.upload(on_upload=handle_upload).props('accept=.zip').classes('max-w-full')
 
         gridPlaylist = ui.aggrid({
