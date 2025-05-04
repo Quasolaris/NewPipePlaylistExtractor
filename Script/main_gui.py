@@ -15,6 +15,21 @@ from pytubefix import YouTube
 from pydub import AudioSegment
 from nicegui import events, ui
 
+class Playlists:
+    def __init__(self, playlists):
+        self._playlists = playlists
+    @property
+    def value(self):
+        """Getter method to retrieve the value of the attribute."""
+        return self._playlists
+
+    @value.setter
+    def value(self, playlists):
+        """Setter method to set the value of the attribute."""
+        self._playlists = playlists
+
+
+
 class text:
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -45,17 +60,16 @@ def create_connection(db_file):
             If not, assume it is the database, uncompressed
         """
         temp_folder = None
-        if(db_file[-4:] == '.zip'):
-            with zipfile.ZipFile(db_file) as newpipezip:
-                db_file = newpipezip.getinfo('newpipe.db')
-                # If newpipe.db is not contained, a KeyError exception will be raised.
-                # If it is contained, test if uncompressed size is under database_size_limit
-                if db_file.file_size > database_size_limit:
-                    print(f"{text.RED}newpipe.db weighs {db_file.file_size} bytes. This script will not extract files over {database_size_limit} bytes.{text.END}")
-                    return None, None
-                temp_folder = tempfile.TemporaryDirectory()
-                db_file = newpipezip.extract('newpipe.db', path=temp_folder.name)
-                print(f"Automatically extracted database to {text.CYAN}{db_file}{text.END}")
+        with zipfile.ZipFile(db_file) as newpipezip:
+            db_file = newpipezip.getinfo('newpipe.db')
+            # If newpipe.db is not contained, a KeyError exception will be raised.
+            # If it is contained, test if uncompressed size is under database_size_limit
+            if db_file.file_size > database_size_limit:
+                print(f"{text.RED}newpipe.db weighs {db_file.file_size} bytes. This script will not extract files over {database_size_limit} bytes.{text.END}")
+                return None, None
+            temp_folder = tempfile.TemporaryDirectory()
+            db_file = newpipezip.extract('newpipe.db', path=temp_folder.name)
+            print(f"Automatically extracted database to {text.CYAN}{db_file}{text.END}")
         conn = sqlite3.connect(db_file)
         # https://docs.python.org/3/library/sqlite3.html
         def dict_factory(cursor, row):
@@ -120,77 +134,66 @@ def getPlaylists(db_file):
     return PlaylistDir
 
 
+
 def main(db_file):
-    ui.html("NewPipe Playlist Extractor")
-    playlists = getPlaylists(db_file)
-    if playlists is None:
-        print("No playlists could be extracted. Exiting.")
-        sys.exit()
 
-    playlistCount = len(playlists)
+    playlists = {}
+    playlistsObject = Playlists({})
+    playlists = playlistsObject._playlists
 
-    print(text.CYAN + str(playlistCount) + text.END + " Playlists extracted ")
 
 
     @ui.page('/')
     def page():
 
-        ui.html("{0} Playlists Extracted".format(playlistCount))
-
-        def handle_theme_change(e: events.ValueChangeEventArguments):
-            gridPlaylist.classes(add='ag-theme-balham-dark' if e.value else 'ag-theme-balham',
-                         remove='ag-theme-balham ag-theme-balham-dark')
-
-       
-        
-
-
-
-        gridPlaylist = ui.aggrid({
-        'defaultColDef': {'flex': 1},
-        'columnDefs' : [{'headerName': 'Playlist', 'field' : 'playlist',  'filter': 'agTextColumnFilter', 'floatingFilter': True, 'checkboxSelection': True},
-        {'headerName': 'Track Count', 'field' : 'count', 'filter': 'agTextColumnFilter', 'floatingFilter': True},],
-        'rowData' : [{'playlist' : playlist, 'count' : len(playlists[playlist])} for playlist in list(playlists.keys())],
-        'rowSelection': 'multiple',
-        }).classes('max-h-100')
-
-
-        ui.html("Select Audio codec (default is MP3)")
-
-        codecChoice = ui.toggle({1: 'MP3', 2: 'WAV', 3: 'FLAC', 4: "ACC", 5 : "OPUS", 6 : "MP4"}, value=1)
-
-        ui.html("Actions")
+        ui.html("NewPipe Playlist Extractor")
 
         
-        ui.button('Select all', on_click=lambda: gridPlaylist.run_grid_method('selectAll'))  
-        ui.button('Deselect all', on_click=lambda: gridPlaylist.run_grid_method('deselectAll')) 
+        async def handle_upload(e: events.UploadEventArguments):
+
+            playlistsObject._playlists = getPlaylists(e.name)
+            playlists = playlistsObject._playlists
 
 
-        ui.html("No feedback implemented yet, check Terminal for updates:")
+            if playlists is None:
+                print("No playlists could be extracted. Exiting.")
+                sys.exit()
 
-        ui.button('Download Selected', on_click=lambda: download_selected_rows())
+            playlistCount = len(playlists)
 
-        
-        dark = ui.dark_mode(value=True)
-        ui.switch('Dark mode', on_change=handle_theme_change).bind_value(dark)
- 
+            ui.html("{0} Playlists Extracted".format(playlistCount))
 
+            print(text.CYAN + str(playlistCount) + text.END + " Playlists extracted ")
+
+            gridPlaylist.options['rowData'] = [{'playlist' : playlist, 'count' : len(playlists[playlist])} for playlist in list(playlists.keys())]
+            gridPlaylist.update()
+
+            playlistsGlobal = playlists
+
+     
+    
         async def download_selected_rows():
-            rows = await gridPlaylist.get_selected_rows()
+            playlists = playlistsObject._playlists
 
+            rows = await gridPlaylist.get_selected_rows()
             if rows:
-                ui.notify("Download Started")
                 for row in rows:
                     playlist = row["playlist"]
                     await downloadPlaylist(playlist, playlists[playlist], codecChoice.value)
- 
-                    
             else:
                 ui.notify('No rows selected', type='negative')
+       
 
-  
+
+
+        async def handle_theme_change(e: events.ValueChangeEventArguments):
+            gridPlaylist.classes(add='ag-theme-balham-dark' if e.value else 'ag-theme-balham',
+                         remove='ag-theme-balham ag-theme-balham-dark')
+
+
+
         async def downloadPlaylist(folderName, playlist, setCodec):
-            
+
             if(setCodec == 1):
                 codec = "mp3"
             elif(setCodec == 2):
@@ -246,6 +249,49 @@ def main(db_file):
                     print(text.RED + str(e) + text.END)
                     print("If Error is: " + text.RED + "get_throttling_function_name: could not find match for multiple" + text.END)
                     print("Read the Error chapter in the README")
+
+
+
+
+        # Start GUI components
+        uploadContent = ui.upload(on_upload=handle_upload).props('accept=.zip').classes('max-w-full')
+
+        gridPlaylist = ui.aggrid({
+        'defaultColDef': {'flex': 1},
+        'columnDefs' : [{'headerName': 'Playlist', 'field' : 'playlist',  'filter': 'agTextColumnFilter', 'floatingFilter': True, 'checkboxSelection': True},
+        {'headerName': 'Track Count', 'field' : 'count', 'filter': 'agTextColumnFilter', 'floatingFilter': True},],
+        'rowData' : [{'playlist' : playlist, 'count' : len(playlists[playlist])} for playlist in list(playlists.keys())],
+        'rowSelection': 'multiple',
+        }).classes('max-h-100')
+
+        ui.html("Select Audio codec (default is MP3)")
+
+        codecChoice = ui.toggle({1: 'MP3', 2: 'WAV', 3: 'FLAC', 4: "ACC", 5 : "OPUS", 6 : "MP4"}, value=1)
+
+        ui.html("Actions")
+
+        
+        ui.button('Select all', on_click=lambda: gridPlaylist.run_grid_method('selectAll'))  
+        ui.button('Deselect all', on_click=lambda: gridPlaylist.run_grid_method('deselectAll')) 
+
+
+        ui.html("No feedback implemented yet, check Terminal for updates, download starts silently and notifies when finished")
+
+        ui.button('Download Selected Playlists', on_click=lambda: download_selected_rows())
+
+        
+        dark = ui.dark_mode(value=True)
+        ui.switch('Dark mode', on_change=handle_theme_change).bind_value(dark)
+        
+
+
+
+ 
+                    
+
+
+  
+        
     ui.run()
    
 if __name__ in {"__main__", "__mp_main__"}:
