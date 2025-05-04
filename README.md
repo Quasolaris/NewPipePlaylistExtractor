@@ -2,6 +2,7 @@
 
 ![NewPipe Playlist Extractor](/Screenshots/Screenshot_Extractor.png)
 
+### GUI is in development, look at the [GUI chapter](https://github.com/Quasolaris/NewPipePlaylistExtractor#gui) for more information.
 <br>
 
 This Python script extracts playlists made with the [NewPipe](https://newpipe.net/) app and allows you to download them as  audio-files. 
@@ -24,7 +25,8 @@ When you create a playlist in NewPipe it is not saved as a YouTube playlist and 
 5. [Linux](https://github.com/Quasolaris/NewPipePlaylistExtractor#linux)
 6. [Windows](https://github.com/Quasolaris/NewPipePlaylistExtractor#windows)
 7. [Android](https://github.com/Quasolaris/NewPipePlaylistExtractor#android)
-8. [Errors and Troubleshooting](https://github.com/Quasolaris/NewPipePlaylistExtractor#errors-and-troubleshooting)
+8. [GUI](https://github.com/Quasolaris/NewPipePlaylistExtractor#gui)
+9. [Errors and Troubleshooting](https://github.com/Quasolaris/NewPipePlaylistExtractor#errors-and-troubleshooting)
 
 
 ## Features
@@ -81,7 +83,22 @@ To use the script on Windows you have to do a few extra steps:
 
 For a step-by-step installation guide for Android [click here](https://github.com/Quasolaris/NewPipePlaylistExtractor/blob/main/Guides/android_manual.md).
 
-## [DEPRICATED USE PYTUBEFIX PIP PACKAGE] - Errors and Troubleshooting
+## GUI
+![image](https://github.com/user-attachments/assets/70e7c24b-81da-4a61-8968-eef940b1b8a9)
+
+To test the GUI that is in development, checkout the ```gui``` branch and run ```python3 main_gui.py```.
+
+### Features already implemented
+- Upload of DB ZIP file, path via CLI is no longer needed
+- Selection of multiple songs playlists to donwload, instead of just one
+- Simple Select All button if every playlist should be downloaded
+- Track count of playlists are shown
+- List is searchable 
+
+
+
+## [DEPRICATED USE PYTUBEFIX PIP PACKAGE] 
+## Errors and Troubleshooting
 ### get_throttling_function_name: could not find match for multiple
 
 This is an error due to YouTube changing stuff, either to update or simply to attack Pytube, NewPipe and other clients/downloaders.
