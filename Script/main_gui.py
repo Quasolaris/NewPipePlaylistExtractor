@@ -135,7 +135,7 @@ def getPlaylists(db_file):
 
 
 
-def main(db_file):
+def main():
 
     playlists = {}
     playlistsObject = Playlists({})
@@ -171,6 +171,9 @@ def main(db_file):
      
     
         async def download_selected_rows():
+            
+            ui.html("Download started")
+
             playlists = playlistsObject._playlists
 
             rows = await gridPlaylist.get_selected_rows()
@@ -242,12 +245,12 @@ def main(db_file):
                         print(text.YELLOW + "Waiting 3 sec. for YouTube DDoS protection circumvent" + text.END)
                         time.sleep(3)
 
-                    ui.notify("Finished Downloading - \"{0}\"".format(folderName), type='positive')
                 except  Exception as e:
                     print(text.RED + str(e) + text.END)
                     print("If Error is: " + text.RED + "get_throttling_function_name: could not find match for multiple" + text.END)
                     print("Read the Error chapter in the README")
-
+            ui.html("Downloading finished - Saved to: {0} - Used Codec: {1}".format(destination, codec))
+            ui.notify("Finished Downloading - \"{0}\"".format(folderName), type='positive')
 
 
 
@@ -274,40 +277,17 @@ def main(db_file):
         ui.button('Select all', on_click=lambda: gridPlaylist.run_grid_method('selectAll'))  
         ui.button('Deselect all', on_click=lambda: gridPlaylist.run_grid_method('deselectAll')) 
 
-
-        ui.html("No feedback implemented yet, check Terminal for updates, download starts silently and notifies when finished")
-
         ui.button('Download Selected Playlists', on_click=lambda: download_selected_rows())
-
         
         dark = ui.dark_mode(value=True)
         ui.switch('Dark mode', on_change=handle_theme_change).bind_value(dark)
-        
 
+        ui.label("============[LOG]============").style('color: #ff2d00; font-size: 100%; font-weight: 300')
 
-
- 
-                    
-
-
-  
-        
+    # start GUI and open browser window        
     ui.run()
    
 if __name__ in {"__main__", "__mp_main__"}:
-    if(len(sys.argv) == 2):
-        main(sys.argv[1])
-    else:
-        print("""Usage: python3 main.py <database>
-
-To use this script:
-    1. Open the NewPipe menu, open the Settings, and select Backup and Restore.
-    2. Tap the option to "Extract the database" as .ZIP file.
-    3. Run this script, replacing <database> with the path of the ZIP file.
-       (Or else, replace <database> with the path of the file newpipe.db inside.)
-
-Examples:
-       $ python3 main.py NEWPIPE.zip
-       $ python3 main.py newpipe.db""")
+        main()
 
 
