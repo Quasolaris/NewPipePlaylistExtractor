@@ -270,7 +270,7 @@ def main():
         {'headerName': 'Track Count', 'field' : 'count', 'filter': 'agTextColumnFilter', 'floatingFilter': True},],
         'rowData' : [{'playlist' : playlist, 'count' : len(playlists[playlist])} for playlist in list(playlists.keys())],
         'rowSelection': 'multiple',
-        }).classes('max-h-100')
+        }).classes('max-h-100').style('height: 20vw;')
 
         with ui.row():
             ui.button('Select all', on_click=lambda: gridPlaylist.run_grid_method('selectAll'))  
