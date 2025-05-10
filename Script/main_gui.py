@@ -255,9 +255,14 @@ def main():
 
 
         # Start GUI components
-        ui.label("NewPipe Playlist Extractor").style('color: #ff2d00; font-size: 200%; font-weight: 300')
-        ui.html("Upload NewPipe ZIP file")
-        uploadContent = ui.upload(on_upload=handle_upload).props('accept=.zip').classes('max-w-full')
+        with ui.column().classes('w-full items-center'):
+            ui.label("NewPipe Playlist Extractor").style('color: #ff2d00; font-size: 200%; font-weight: 300')
+        with ui.column().classes('w-full items-center'):
+            ui.html("Upload NewPipe ZIP file")
+            uploadContent = ui.upload(on_upload=handle_upload).props('accept=.zip').classes('max-w-full')
+
+
+        
 
         gridPlaylist = ui.aggrid({
         'defaultColDef': {'flex': 1},
@@ -267,20 +272,22 @@ def main():
         'rowSelection': 'multiple',
         }).classes('max-h-100')
 
-        ui.html("Select Audio codec (default is MP3)")
-
-        codecChoice = ui.toggle({1: 'MP3', 2: 'WAV', 3: 'FLAC', 4: "ACC", 5 : "OPUS", 6 : "MP4"}, value=1)
-
-        ui.html("Actions")
+        with ui.row():
+            ui.button('Select all', on_click=lambda: gridPlaylist.run_grid_method('selectAll'))  
+            ui.button('Deselect all', on_click=lambda: gridPlaylist.run_grid_method('deselectAll')) 
 
         
-        ui.button('Select all', on_click=lambda: gridPlaylist.run_grid_method('selectAll'))  
-        ui.button('Deselect all', on_click=lambda: gridPlaylist.run_grid_method('deselectAll')) 
 
-        ui.button('Download Selected Playlists', on_click=lambda: download_selected_rows())
+        with ui.column().classes('w-full items-center'):
+            ui.html("Choose Audio Codec")
+            codecChoice = ui.toggle({1: 'MP3', 2: 'WAV', 3: 'FLAC', 4: "ACC", 5 : "OPUS", 6 : "MP4"}, value=1)
+            ui.html(" ")
+            ui.button('Download Selected Playlists', on_click=lambda: download_selected_rows(), color="green")
         
-        dark = ui.dark_mode(value=True)
-        ui.switch('Dark mode', on_change=handle_theme_change).bind_value(dark)
+        with ui.column().classes('w-full items-left'):
+            dark = ui.dark_mode(value=True)
+            ui.switch('Dark mode', on_change=handle_theme_change).bind_value(dark)
+        
 
         ui.label("============[LOG]============").style('color: #ff2d00; font-size: 100%; font-weight: 300')
 
