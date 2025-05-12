@@ -152,7 +152,12 @@ def main():
 
     
         async def handle_upload(e: events.UploadEventArguments):
+            """
+            Handles the upload of the NewPipe ZIP file.
 
+            :param e: events of NiceGUI upload module 
+            :return None:
+            """
             playlistsObject._playlists = getPlaylists(e.name)
             playlists = playlistsObject._playlists
 
@@ -169,12 +174,15 @@ def main():
 
             gridPlaylist.options['rowData'] = [{'playlist' : playlist, 'count' : len(playlists[playlist])} for playlist in list(playlists.keys())]
             gridPlaylist.update()
-
-            playlistsGlobal = playlists
-
      
     
         async def download_selected_rows():
+            """
+            Checks which rows playlists are selected and downloads them.
+
+            :param None:
+            :return None:
+            """
             
             ui.html("Download started")
 
@@ -192,12 +200,26 @@ def main():
 
 
         async def handle_theme_change(e: events.ValueChangeEventArguments):
+            """
+            Handles dark and light theme change for the table.
+
+            :param e: event of the dark mode switch
+            :return None:
+            """
             gridPlaylist.classes(add='ag-theme-balham-dark' if e.value else 'ag-theme-balham',
                          remove='ag-theme-balham ag-theme-balham-dark')
 
 
 
         async def downloadPlaylist(folderName, playlist, setCodec):
+            """
+            Downloads the passed playlist with the passed codec.
+
+            :param folderName: name of the playlist to name the folder where the tracks will be stored.
+            :param playlist: list of tracks that will be downloaded into the folder.
+            :param setCodec: value of the GUI codec element
+            :return None:
+            """
 
             if(setCodec == 1):
                 codec = "mp3"
