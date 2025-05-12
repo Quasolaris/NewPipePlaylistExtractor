@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 import csv
 import sqlite3
 import sys
@@ -16,16 +15,23 @@ from pydub import AudioSegment
 from nicegui import events, ui
 
 class Playlists:
+    """
+    Class to have the playlists in a static memory position, to have it callable inside async functions
+    Use getter and setter for access and update of playlists
+    """
     def __init__(self, playlists):
+        """
+        Takes a dictionary and stores it
+        """
         self._playlists = playlists
     @property
     def value(self):
-        """Getter method to retrieve the value of the attribute."""
+        """Getter method to retrieve the playlists"""
         return self._playlists
 
     @value.setter
     def value(self, playlists):
-        """Setter method to set the value of the attribute."""
+        """Setter method to set the playlists"""
         self._playlists = playlists
 
 
@@ -116,10 +122,8 @@ def getPlaylists(db_file):
     and a list of videos as value.
     Each video is represented by a dict (see get_rows()).
 
-    Folder gets named after Key, and URLs
-    downloaded into given folder
-    
-    TODO: Add meta data to songs --> Playlist name as Album
+    :param db_file: database file
+    :return PlaylistDir: Dictionary with playlists, key is name, value is list of tracks (URL)
     """
     print("Extracting Playlists...")
     rows = get_rows(db_file)
