@@ -33,6 +33,8 @@ When you create a playlist in NewPipe it is not saved as a YouTube playlist and 
 - Download all playlists with chosen audio codec
 - Downloads single playlist with chosen audio codec
 - Export playlists as CSV file
+- piped_libretube_playlists.py
+playlists.csv to piped-playlists.json (libretube)
 - Export playlists as a TXT file (Format: "Playlist title" \n "URLs")
 - Export playlists as a Markdown file
 - Export playlists as a M3U8 file 
