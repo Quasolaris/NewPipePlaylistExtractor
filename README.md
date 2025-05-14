@@ -61,7 +61,7 @@ The script supports the following codecs:
 - Load it to your PC
 - Optionally, extract the newpipe.db file from it
 - Run script with path to the NewPipe data ZIP file (`python3 main.py NewPipe_<timestamp>.zip`) or the extracted newpipe.db file (`python3 main.py newpipe.db`)
-- python3 piped_libretube_playlists.py (playlists.csv to piped-playlists.json)
+- python3 piped_libretube_playlists.py (playlists.csv to piped-playlists.json) (for libretube app only)
 - Choose action
 - Follow instructions
 - To update playlists just repeat with new .db or .zip file. Already downloaded files will be ignored
