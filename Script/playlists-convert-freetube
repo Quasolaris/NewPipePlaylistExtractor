@@ -1,16 +1,16 @@
 #!/bin/bash
 
 : <<'DOC_COMMENT'
-termux Install dependencies:
+# termux Install dependencies:
 pkg install -y jq python-yt-dlp uuid-utils sed coreutils
 
-Make executable:
+# Make executable:
 chmod +x playlists-convert-freetube.sh
 
-Run:
+# Run:
 bash playlists-convert-freetube.sh
 
-playlists.csv to freetube-playlists.db
+# playlists.csv to freetube-playlists.db
 
 DOC_COMMENT
 
