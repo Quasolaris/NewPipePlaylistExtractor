@@ -63,6 +63,8 @@ The script supports the following codecs:
 - Optionally, extract the newpipe.db file from it
 - Run script with path to the NewPipe data ZIP file (`python3 main.py NewPipe_<timestamp>.zip`) or the extracted newpipe.db file (`python3 main.py newpipe.db`)
 - python3 playlists-convert-piped.py (playlists.csv to playlists-piped.json)
+- python3 playlists-convert-freetube.py
+(playlists.csv to freetube-playlists.db)
 - Choose action
 - Follow instructions
 - To update playlists just repeat with new .db or .zip file. Already downloaded files will be ignored
