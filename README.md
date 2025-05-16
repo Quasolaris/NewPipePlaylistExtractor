@@ -54,7 +54,7 @@ The script supports the following codecs:
 - [pytubefix](https://pypi.org/project/pytubefix/) ``pip3 install pytubefix``
 - [db-sqlite3](https://pypi.org/project/db-sqlite3/) ``pip3 install db-sqlite3``
 - [pydub](https://pypi.org/project/pydub/) ```pip3 install pydub```
-- playlists.csv to freetube-playlists.db
+- [playlists.csv to freetube-playlists.db]
 ``pip3 install yt_dlp``
 - [ffmpeg](https://ffmpeg.org/) ``sudo apt install ffmpeg``
 - The codec you want to download has to be installed on your machine
