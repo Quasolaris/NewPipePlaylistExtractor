@@ -10,15 +10,7 @@ chmod +x playlists-convert-freetube.sh
 Run:
 bash playlists-convert-freetube.sh
 
-Input/Output Example:
-playlists.csv:
-play1,"['https://www.youtube.com/watch?v=OjTNQNr7LA8', 'https://www.youtube.com/watch?v=-4GmbBoYQjE']"
-play2,"['https://www.youtube.com/watch?v=-5X2pt95cIo', 'https://www.youtube.com/watch?v=gxoVXOSqGOc']"
-
-freetube-playlists.db:
-{"playlistName":"Favorites","protected":false,"description":"Your favorite videos","videos":[],"_id":"favorites","createdAt":1747248028177,"lastUpdatedAt":1747249507491}
-{"playlistName":"play1","protected":false,"description":"","videos":[{"videoId":"OjTNQNr7LA8","title":"Trump Mother's Day Cold Open - SNL","author":"Saturday Night Live","authorId":"UCqFzWxSCi39LnW1JKFR3efg","lengthSeconds":409,"published":1746937101000,"timeAdded":1747285321737,"playlistItemId":"47d3d0fa-8f23-4686-b7b2-05cac7dfebd1","type":"video"},{"videoId":"-4GmbBoYQjE","title":"I Explored 2000 Year Old Ancient Temples","author":"MrBeast","authorId":"UCX6OQ3DkcsbYNE6H8uQQuVA","lengthSeconds":946,"published":1746892801000,"timeAdded":1747285369657,"playlistItemId":"6ae95509-8a1d-4b25-aa0c-4b06d7722580","type":"video"}],"_id":"ft-playlist--47bf335a-c035-4082-9694-96ad64a00888","createdAt":1747285258255,"lastUpdatedAt":1747285369658}
-{"playlistName":"play2","protected":false,"description":"","videos":[{"videoId":"-5X2pt95cIo","title":"Nobody 2 | Official Trailer","author":"Universal Pictures","authorId":"UCq0OueAsdxH6b8nyAspwViw","lengthSeconds":174,"published":1747148421000,"timeAdded":1747285418697,"playlistItemId":"158983f3-86ff-4bfa-8ec4-9a5fc6a1f535","type":"video"},{"videoId":"gxoVXOSqGOc","title":"United — About Newark Liberty International Airport","author":"United","authorId":"UCmPCDirz9wCBghJLZ-HL3BQ","lengthSeconds":83,"published":1747079330000,"timeAdded":1747285481249,"playlistItemId":"b5c786f1-6533-46ca-b928-7d8b1251ee81","type":"video"}],"_id":"ft-playlist--8f3c4b3f-cc93-4bc5-826f-df92cdf74629","createdAt":1747285270132,"lastUpdatedAt":1747285481250}
+playlists.csv to freetube-playlists.db
 
 DOC_COMMENT
 
