@@ -35,6 +35,7 @@ When you create a playlist in NewPipe it is not saved as a YouTube playlist and 
 - Export playlists as CSV file
 - playlists.csv to playlists-piped.json
 - playlists.csv to freetube-playlists.db
+- playlists-piped.json to freetube-playlists.db
 - Export playlists as a TXT file (Format: "Playlist title" \n "URLs")
 - Export playlists as a Markdown file
 - Export playlists as a M3U8 file 
