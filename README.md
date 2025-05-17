@@ -33,6 +33,9 @@ When you create a playlist in NewPipe it is not saved as a YouTube playlist and 
 - Download all playlists with chosen audio codec
 - Downloads single playlist with chosen audio codec
 - Export playlists as CSV file
+- playlists.csv to playlists-piped.json
+- playlists.csv to freetube-playlists.db
+- playlists-piped.json to freetube-playlists.db
 - Export playlists as a TXT file (Format: "Playlist title" \n "URLs")
 - Export playlists as a Markdown file
 - Export playlists as a M3U8 file 
@@ -52,6 +55,8 @@ The script supports the following codecs:
 - [pytubefix](https://pypi.org/project/pytubefix/) ``pip3 install pytubefix``
 - [db-sqlite3](https://pypi.org/project/db-sqlite3/) ``pip3 install db-sqlite3``
 - [pydub](https://pypi.org/project/pydub/) ``pip3 install pydub``
+- playlists.csv to freetube-playlists.db  
+``pip3 install yt_dlp``
 - [ffmpeg](https://ffmpeg.org/) ``sudo apt install ffmpeg``
 - The codec you want to download has to be installed on your machine
 
@@ -60,6 +65,11 @@ The script supports the following codecs:
 - Load it to your PC
 - Optionally, extract the newpipe.db file from it
 - Run script with path to the NewPipe data ZIP file (`python3 main.py NewPipe_<timestamp>.zip`) or the extracted newpipe.db file (`python3 main.py newpipe.db`)
+- python3 playlists-convert-piped.py (playlists.csv to playlists-piped.json)
+- python3 playlists-convert-piped-to-freetube.py  
+(playlists-piped.json to freetube-playlists.db)
+- python3 playlists-convert-freetube.py
+(playlists.csv to freetube-playlists.db)
 - Choose action
 - Follow instructions
 - To update playlists just repeat with new .db or .zip file. Already downloaded files will be ignored
