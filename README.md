@@ -1,5 +1,13 @@
 # NewPipe Playlist Extractor
 
+## This repository moved to Codeberg
+GitHub is no longer a place where I want to upload and share my code, for different reasons. I therefore decided to move my repositories to Codeberg, you can find this migrated repository here:
+
+https://codeberg.org/Quasolaris/NewPipePlaylistExtractor
+
+I will leave the repositories as they are for now on GitHub. Later this year I will archive them.
+
+
 ![NewPipe Playlist Extractor](/Screenshots/Screenshot_Extractor.png)
 
 ### GUI is in development, look at the [GUI chapter](https://github.com/Quasolaris/NewPipePlaylistExtractor#gui) for more information.
