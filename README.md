@@ -20,7 +20,6 @@ When you create a playlist in NewPipe it is not saved as a YouTube playlist and 
 
 [Stargazers over time](https://starchart.cc/Quasolaris/NewPipePlaylistExtractor)
 
-
 ### Note: To use script on Windows or Android please see instructions below
 ### Note: MacOS users, you can follow the Linux guide
 
@@ -35,7 +34,6 @@ When you create a playlist in NewPipe it is not saved as a YouTube playlist and 
 8. [GUI](https://github.com/Quasolaris/NewPipePlaylistExtractor#gui)
 9. [Errors and Troubleshooting](https://github.com/Quasolaris/NewPipePlaylistExtractor#errors-and-troubleshooting)
 
-
 ## Features
 - Download all playlists with chosen audio codec
 - Downloads single playlist with chosen audio codec
@@ -44,7 +42,9 @@ When you create a playlist in NewPipe it is not saved as a YouTube playlist and 
 - Export playlists as a Markdown file
 - Export playlists as a M3U8 file 
 - Output is coloured (Because colours are fun!)
-
+- playlists.csv to freetube-playlists.db,grayjay-export.zip,playlists-piped.json or newpipedata.zip and back to playlists.csv
+- only newpipe can bookmark remote playlists
+- no local playlists private video support
 
 ## Codecs
 The script supports the following codecs:
@@ -56,10 +56,11 @@ The script supports the following codecs:
 - mp4
 
 ## Dependencies
-- [pytubefix](https://pypi.org/project/pytubefix/) ``pip3 install pytubefix``
-- [db-sqlite3](https://pypi.org/project/db-sqlite3/) ``pip3 install db-sqlite3``
-- [pydub](https://pypi.org/project/pydub/) ``pip3 install pydub``
-- [ffmpeg](https://ffmpeg.org/) ``sudo apt install ffmpeg``
+-  ``pip3 install pytubefix db-sqlite3 pydub audioop-lts yt_dlp``
+-  ``sudo apt install ffmpeg``
+- [pytubefix](https://pypi.org/project/pytubefix/) [db-sqlite3](https://pypi.org/project/db-sqlite3/)
+[pydub](https://pypi.org/project/pydub/)
+[ffmpeg](https://ffmpeg.org/)
 - The codec you want to download has to be installed on your machine
 
 ## Usage
@@ -71,8 +72,21 @@ The script supports the following codecs:
 - Follow instructions
 - To update playlists just repeat with new .db or .zip file. Already downloaded files will be ignored
 - Enjoy your music!
-
-The playlists get saved into the /Script/Playlists folder
+- The playlists get saved into the /Script/Playlists folder
+- *
+- python3 freetube-convert-playlists.py freetube-playlists.db playlists.csv
+- python3 piped-convert-playlists.py playlists-piped.json playlists.csv
+- python3 grayjay-convert-playlists.py grayjay-export.zip playlists.csv
+- python3 newpipe-convert-playlists.py newpipe.db playlists.csv
+- python3 newpipe-convert-playlists.py NewPipeData.zip playlists.csv
+- *
+- python3 playlists-convert-freetube.py playlists.csv freetube-playlists.db
+- python3 playlists-convert-piped.py playlists.csv playlists-piped.json
+- python3 playlists-convert-grayjay.py Grayjay-Zip-Template.zip playlists.csv grayjay-export.zip
+- python3 playlists-convert-newpipe.py NewPipeData-Zip-Template.zip playlists.csv NewPipeData.zip
+- *
+- python3 newpipedb-export-csv.py newpipe.db output-csv-folder
+- python3 structure-overview-zip.py archive.zip structure-overview.txt
 
 ## Linux
 Install the dependencies and you are good to go.
